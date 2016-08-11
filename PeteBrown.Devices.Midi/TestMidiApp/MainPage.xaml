@@ -1,0 +1,30 @@
+﻿<Page
+    x:Class="TestMidiApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TestMidiApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top"
+                   Text="This sends MIDI clock at the specified BPM out through all MIDI output ports that can be opened, with the exception of the GS synth. Contact @pete_brown with any questions."
+                   FontSize="40" TextWrapping="Wrap" />
+        <Button x:Name="Start" Content="Start" HorizontalAlignment="Left" FontSize="70" Margin="20" Padding="30"
+                Click="Start_Click" />
+
+        <Button x:Name="Stop" Content="Stop" HorizontalAlignment="Right" FontSize="70" Margin="20" Padding="30"
+                Click="Stop_Click"/>
+
+        <Slider x:Name="Tempo" HorizontalContentAlignment="Center" 
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                Margin="250"
+                Minimum="20" Maximum="320" Value="120" 
+                ValueChanged="Tempo_ValueChanged"/>
+
+        <TextBlock x:Name="TempoText" FontSize="150" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="50"
+                   Text="120 bpm" />
+    </Grid>
+</Page>
