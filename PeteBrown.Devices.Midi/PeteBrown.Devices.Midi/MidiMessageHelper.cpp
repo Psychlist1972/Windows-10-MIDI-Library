@@ -16,7 +16,7 @@ MidiMessageHelper::MidiMessageHelper()
 // http://sequence15.blogspot.com/2009/01/exploring-fizmo-nrpn-set.html
 // http://www.yar2050.com/2012/02/msb-and-lsb-with-midi-nrpn.html
 
-void MidiMessageHelper::SendNrpnMessage(Windows::Devices::Midi::MidiOutPort^ outputPort, byte channelZeroBased, unsigned short parameterNumber, unsigned short parameterValue)
+void MidiMessageHelper::SendNrpnMessage(MidiOutPort^ outputPort, byte channelZeroBased, unsigned short parameterNumber, unsigned short parameterValue)
 {
 	// TODO
 
@@ -29,7 +29,7 @@ void MidiMessageHelper::SendNrpnMessage(Windows::Devices::Midi::MidiOutPort^ out
 }
 
 
-void MidiMessageHelper::SendRpnMessage(Windows::Devices::Midi::MidiOutPort^ outputPort, byte channelZeroBased, unsigned short parameterNumber, unsigned short parameterValue)
+void MidiMessageHelper::SendRpnMessage(MidiOutPort^ outputPort, byte channelZeroBased, unsigned short parameterNumber, unsigned short parameterValue)
 {
 	// TODO
 }

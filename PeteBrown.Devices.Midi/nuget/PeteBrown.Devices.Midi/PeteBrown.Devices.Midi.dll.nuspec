@@ -3,15 +3,15 @@
   <metadata minClientVersion="3.1">
     <id>PeteBrown.Devices.Midi</id>
     <title>Windows 10 MIDI API helper library for UWP applications.</title>
-    <version>0.80.003</version>
+    <version>0.80.005-alpha</version>
     <authors>Pete Brown</authors>
     <owners>Pete Brown</owners>
     <licenseUrl>https://github.com/Psychlist1972/Windows-10-MIDI-Library/blob/master/LICENSE.md</licenseUrl>
-    <projectUrl>https://github.com/Psychlist1972/Windows-10-MIDI-Library/tree/master</projectUrl>
-    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+    <projectUrl>https://github.com/Psychlist1972/Windows-10-MIDI-Library/</projectUrl>
+<!--    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl> -->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Helper library for enumerating MIDI devices, responding to hot plug/unplug, and more. Also includes a MIDI clock generator class.</description>
-    <releaseNotes>Alpha release.</releaseNotes>
+    <releaseNotes>Alpha release. Requires Windows 10 Anniversary Edition and matching Windows SDK. Contact @pete_brown with any questions, issues, or requests.</releaseNotes>
     <copyright>Copyright 2016 - Pete Brown</copyright>
     <tags>MIDI music audio</tags>
     <dependencies>

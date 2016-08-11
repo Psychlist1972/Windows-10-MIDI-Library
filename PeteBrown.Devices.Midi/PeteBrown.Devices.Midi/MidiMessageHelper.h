@@ -4,6 +4,9 @@ namespace PeteBrown
 {
 	namespace Devices
 	{
+
+		// This is not yet implemented, and so is private for now.
+
 		namespace Midi
 		{
 			private ref class MidiMessageHelper sealed
