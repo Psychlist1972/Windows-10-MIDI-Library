@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package >
+  <metadata minClientVersion="3.1">
+    <id>PeteBrown.Devices.Midi</id>
+    <title>Windows 10 MIDI API helper library for UWP applications.</title>
+    <version>0.80.003</version>
+    <authors>Pete Brown</authors>
+    <owners>Pete Brown</owners>
+    <licenseUrl>https://github.com/Psychlist1972/Windows-10-MIDI-Library/blob/master/LICENSE.md</licenseUrl>
+    <projectUrl>https://github.com/Psychlist1972/Windows-10-MIDI-Library/tree/master</projectUrl>
+    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Helper library for enumerating MIDI devices, responding to hot plug/unplug, and more. Also includes a MIDI clock generator class.</description>
+    <releaseNotes>Alpha release.</releaseNotes>
+    <copyright>Copyright 2016 - Pete Brown</copyright>
+    <tags>MIDI music audio</tags>
+    <dependencies>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\..\ARM\Release\PeteBrown.Devices.Midi\PeteBrown.Devices.Midi.dll" target="Runtimes\win10-ARM" />
+    <file src="..\..\Release\PeteBrown.Devices.Midi\PeteBrown.Devices.Midi.dll" target="Runtimes\win10-x86" />
+    <file src="..\..\x64\Release\PeteBrown.Devices.Midi\PeteBrown.Devices.Midi.dll" target="Runtimes\win10-x64" />
+
+    <file src="..\..\x64\Release\PeteBrown.Devices.Midi\PeteBrown.Devices.Midi.winmd" target="lib\uap10.0" />
+    <file src="..\..\x64\Release\PeteBrown.Devices.Midi\PeteBrown.Devices.Midi.xml" target="lib\uap10.0" />
+
+  </files>
+</package>
