@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestMidiApp", "TestMidiApp\TestMidiApp.csproj", "{32472111-A2D3-405D-862F-15E7BF56D526}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{E11C0F5F-B1BB-419B-9C29-3F72DD2BA729}"
+	ProjectSection(SolutionItems) = preProject
+		nuget\PeteBrown.Devices.Midi\PeteBrown.Devices.Midi.dll.nuspec = nuget\PeteBrown.Devices.Midi\PeteBrown.Devices.Midi.dll.nuspec
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -18,11 +18,11 @@ MidiMessageHelper::MidiMessageHelper()
 
 void MidiMessageHelper::SendNrpnMessage(MidiOutPort^ outputPort, byte channelZeroBased, unsigned short parameterNumber, unsigned short parameterValue)
 {
-	// TODO
+    // TODO
 
-	// IBuffer
-	// http://stackoverflow.com/questions/10520335/how-to-wrap-a-char-buffer-in-a-winrt-ibuffer-in-c
-	// https://msdn.microsoft.com/en-us/library/windows/apps/windows.storage.streams.buffer.aspx?f=255&MSPPError=-2147217396
+    // IBuffer
+    // http://stackoverflow.com/questions/10520335/how-to-wrap-a-char-buffer-in-a-winrt-ibuffer-in-c
+    // https://msdn.microsoft.com/en-us/library/windows/apps/windows.storage.streams.buffer.aspx?f=255&MSPPError=-2147217396
 
 //	outputPort->SendBuffer();
 
@@ -31,5 +31,5 @@ void MidiMessageHelper::SendNrpnMessage(MidiOutPort^ outputPort, byte channelZer
 
 void MidiMessageHelper::SendRpnMessage(MidiOutPort^ outputPort, byte channelZeroBased, unsigned short parameterNumber, unsigned short parameterValue)
 {
-	// TODO
+    // TODO
 }
