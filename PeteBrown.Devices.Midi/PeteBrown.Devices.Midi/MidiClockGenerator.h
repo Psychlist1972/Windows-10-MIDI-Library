@@ -30,8 +30,10 @@ namespace PeteBrown
 
 				inline void BroadcastMessage(Windows::Devices::Midi::IMidiMessage^ message)
 				{
-					for (auto&& port : _outputPorts)
-						port->SendMessage(message);
+                    for (auto&& port : _outputPorts)
+                    {
+                        port->SendMessage(message);
+                    }
 				}
 
 			public:

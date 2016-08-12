@@ -85,8 +85,10 @@ void MidiClockGenerator::ThreadWorker(Windows::Foundation::IAsyncAction^ operati
 	double errorAccumulator = 0.0;
 
 	// Send the MIDI stop message to start the sequencer
-	if (_sendMidiStartMessage)
-		BroadcastMessage(ref new MidiStartMessage());
+    if (_sendMidiStartMessage)
+    {
+        BroadcastMessage(ref new MidiStartMessage());
+    }
 
 
 	//byte clockMessage = 0xF8;
@@ -118,16 +120,20 @@ void MidiClockGenerator::ThreadWorker(Windows::Foundation::IAsyncAction^ operati
 		// spin until this cycle is done
 		// This is the one part I really dislike here.
 		// sleeping the thread is no good due to durations required
-		while (currentTime.QuadPart < nextTime)
-			QueryPerformanceCounter(&currentTime);
+        while (currentTime.QuadPart < nextTime)
+        {
+            QueryPerformanceCounter(&currentTime);
+        }
 
 		// accumulate some error :)
 		errorAccumulator += _tickTruncationError;
 	}
 
 	// Send the MIDI stop message to stop the sequencer
-	if (_sendMidiStopMessage)
-		BroadcastMessage(ref new MidiStopMessage());
+    if (_sendMidiStopMessage)
+    {
+        BroadcastMessage(ref new MidiStopMessage());
+    }
 
 	OutputDebugString(_T(" MidiClock: Stopped Running (in background thread)\n"));
 }

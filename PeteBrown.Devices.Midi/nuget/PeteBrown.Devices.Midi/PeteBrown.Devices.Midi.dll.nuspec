@@ -3,7 +3,7 @@
   <metadata minClientVersion="3.1">
     <id>PeteBrown.Devices.Midi</id>
     <title>Windows 10 MIDI API helper library for UWP applications.</title>
-    <version>0.80.005-alpha</version>
+    <version>0.80.006-alpha</version>
     <authors>Pete Brown</authors>
     <owners>Pete Brown</owners>
     <licenseUrl>https://github.com/Psychlist1972/Windows-10-MIDI-Library/blob/master/LICENSE.md</licenseUrl>
