@@ -15,5 +15,6 @@ Features
 Updated NuGet package pending finished observable collection and testing.
 
 Questions or concerns?
-Issues and dicussion here or, Twitter: @pete_brown
+Issues and discussion here on GitHub or, Twitter: @pete_brown
+Pull requests encouraged. :)
 
