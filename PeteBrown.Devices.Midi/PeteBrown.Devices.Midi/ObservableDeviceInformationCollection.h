@@ -7,6 +7,9 @@ namespace PeteBrown
 	{
 		namespace Midi
 		{
+			// NOTE: This doesn't yet fully work with C# XAML binding. Change notifications after the fact are not
+			// reflected in UI controls.
+			//
 			// TODO: INOtifyPropertyChanged
 
 			[Windows::Foundation::Metadata::WebHostHidden]
