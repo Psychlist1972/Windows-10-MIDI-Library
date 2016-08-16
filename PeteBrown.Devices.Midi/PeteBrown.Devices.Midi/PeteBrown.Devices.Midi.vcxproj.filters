@@ -11,11 +11,13 @@
     <ClCompile Include="MidiClockGenerator.cpp" />
     <ClCompile Include="MidiDeviceWatcher.cpp" />
     <ClCompile Include="MidiMessageHelper.cpp" />
+    <ClCompile Include="ObservableDeviceInformationCollection.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="MidiClockGenerator.h" />
     <ClInclude Include="MidiDeviceWatcher.h" />
     <ClInclude Include="MidiMessageHelper.h" />
+    <ClInclude Include="ObservableDeviceInformationCollection.h" />
   </ItemGroup>
 </Project>

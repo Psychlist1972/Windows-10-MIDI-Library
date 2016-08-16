@@ -6,25 +6,91 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    
+    <!-- It's not meant to be pretty! -->
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top"
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+        
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="MIDI Interfaces" FontSize="40"/>
+        
+        <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <TextBlock Text="Inputs" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="40" />
+                <ItemsControl x:Name="MidiInputList" Margin="20, 60, 20, 20">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"  FontSize="20" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+            <Grid Grid.Row="1">
+                <TextBlock Text="Outputs" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="40" />
+                <ItemsControl x:Name="MidiOutputList" Margin="20, 60, 20, 20">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" FontSize="20"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.Column="1"  Background="Aquamarine">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20" 
+                   Grid.Row="0"
                    Text="This sends MIDI clock at the specified BPM out through all MIDI output ports that can be opened, with the exception of the GS synth. Contact @pete_brown with any questions."
-                   FontSize="40" TextWrapping="Wrap" />
-        <Button x:Name="Start" Content="Start" HorizontalAlignment="Left" FontSize="70" Margin="20" Padding="30"
+                   FontSize="30" TextWrapping="Wrap" />
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="1" Background="Bisque">
+            <Button x:Name="Start" Content="Start" HorizontalAlignment="Left" FontSize="50" Margin="20" Padding="30"
                 Click="Start_Click" />
 
-        <Button x:Name="Stop" Content="Stop" HorizontalAlignment="Right" FontSize="70" Margin="20" Padding="30"
+            <Button x:Name="Stop" Content="Stop" HorizontalAlignment="Right" FontSize="50" Margin="20" Padding="30"
                 Click="Stop_Click"/>
 
-        <Slider x:Name="Tempo" HorizontalContentAlignment="Center" 
+            <Slider x:Name="Tempo" HorizontalContentAlignment="Center" 
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Center"
                 Margin="250"
                 Minimum="20" Maximum="320" Value="120" 
                 ValueChanged="Tempo_ValueChanged"/>
 
-        <TextBlock x:Name="TempoText" FontSize="150" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="50"
+            <TextBlock x:Name="TempoText" FontSize="150" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="50"
                    Text="120 bpm" />
+        </Grid>
+
+        <Grid Grid.Row="2" Grid.Column="1" Background="AliceBlue">
+            <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="Channel" Header="Channel" Margin="20" FontSize="30" Text="0"/>
+                <TextBox x:Name="ParameterNumber" Header="Parameter Number" Margin="20" FontSize="30" Text="350"/>
+                <TextBox x:Name="ParameterValue" Header="Parameter Value"  Margin="20"  FontSize="30" Text="16001"/>
+
+                <Button x:Name="TestNrpn" Content="Test NRPN" HorizontalAlignment="Left" FontSize="30" Margin="20" Padding="30"
+                    Click="TestNrpn_Click" />
+                <Button x:Name="TestRpn" Content="Test RPN" HorizontalAlignment="Left" FontSize="30" Margin="20" Padding="30"
+                    Click="TestRpn_Click" />
+
+            </StackPanel>
+        </Grid>
+        
     </Grid>
 </Page>

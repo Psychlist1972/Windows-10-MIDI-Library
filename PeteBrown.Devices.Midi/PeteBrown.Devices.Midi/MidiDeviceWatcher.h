@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ObservableDeviceInformationCollection.h"
+
 namespace PeteBrown
 {
     namespace Devices
@@ -7,20 +9,26 @@ namespace PeteBrown
         namespace Midi
         {
             ref class MidiDeviceWatcher;
-            public delegate void MidiDeviceEnumerationEventHandler(MidiDeviceWatcher^ sender);
+            
+			// Web host hidden due to types used in the observable collection implementation
+			[Windows::Foundation::Metadata::WebHostHidden]
+			public delegate void MidiDeviceEnumerationEventHandler(MidiDeviceWatcher^ sender);
 
-            /// <summary>
+			// Web host hidden due to types used in the observable collection implementation
+			[Windows::Foundation::Metadata::WebHostHidden]
+			
+			/// <summary>
             /// Class to assist in enumeration of MIDI devices, and handling hot plugging/unplugging.
             /// </summary>
-            public ref class MidiDeviceWatcher sealed
+			public ref class MidiDeviceWatcher sealed
             {
             private:
 
                 // magic string to identify the wavetable synth
                 const wchar_t* WAVETABLE_SYNTH_ID_STRING = L"MicrosoftGSWavetableSynth\0";
 
-                Windows::Foundation::Collections::IObservableVector<Windows::Devices::Enumeration::DeviceInformation^>^ _outputPortDescriptors;
-                Windows::Foundation::Collections::IObservableVector<Windows::Devices::Enumeration::DeviceInformation^>^ _inputPortDescriptors;
+                ObservableDeviceInformationCollection^ _outputPortDescriptors;
+				ObservableDeviceInformationCollection^ _inputPortDescriptors;
 
                 Windows::Devices::Enumeration::DeviceWatcher^ _inputWatcher;
                 Windows::Devices::Enumeration::DeviceWatcher^ _outputWatcher;
@@ -54,18 +62,18 @@ namespace PeteBrown
                 /// All enumerated MIDI Output port DeviceInformation objects. Uses this information to open the MIDI ports.
                 /// ** NOTE: This collection type is likely to change to a more C#-friendly type. **
                 /// </summary>
-                property Windows::Foundation::Collections::IObservableVector<Windows::Devices::Enumeration::DeviceInformation^>^ OutputPortDescriptors
+                property ObservableDeviceInformationCollection^ OutputPortDescriptors
                 {
-                    Windows::Foundation::Collections::IObservableVector<Windows::Devices::Enumeration::DeviceInformation^>^ get();
+					ObservableDeviceInformationCollection^ get();
                 }
 
                 /// <summary>
                 /// All enumerated MIDI Input port DeviceInformation objects. Uses this information to open the MIDI ports.
                 /// ** NOTE: This collection type is likely to change to a more C#-friendly type. **
                 /// </summary>
-                property Windows::Foundation::Collections::IObservableVector<Windows::Devices::Enumeration::DeviceInformation^>^ InputPortDescriptors
+                property ObservableDeviceInformationCollection^ InputPortDescriptors
                 {
-                    Windows::Foundation::Collections::IObservableVector<Windows::Devices::Enumeration::DeviceInformation^>^ get();
+					ObservableDeviceInformationCollection^ get();
                 }
 
                 /// <summary>

@@ -12,20 +12,20 @@ using namespace PeteBrown::Devices::Midi;
 
 MidiDeviceWatcher::MidiDeviceWatcher()
 {
-    _inputPortDescriptors = ref new Platform::Collections::Vector<DeviceInformation^>();
-    _outputPortDescriptors = ref new Platform::Collections::Vector<DeviceInformation^>();
+    _inputPortDescriptors = ref new ObservableDeviceInformationCollection();
+    _outputPortDescriptors = ref new ObservableDeviceInformationCollection();
 }
 
 
 
 // list of output ports
-IObservableVector<DeviceInformation^>^ MidiDeviceWatcher::OutputPortDescriptors::get()
+ObservableDeviceInformationCollection^ MidiDeviceWatcher::OutputPortDescriptors::get()
 {
     return _outputPortDescriptors;
 }
 
 // list of input ports
-IObservableVector<DeviceInformation^>^ MidiDeviceWatcher::InputPortDescriptors::get()
+ObservableDeviceInformationCollection^ MidiDeviceWatcher::InputPortDescriptors::get()
 {
     return _inputPortDescriptors;
 }

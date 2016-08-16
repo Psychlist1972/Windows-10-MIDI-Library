@@ -1,4 +1,4 @@
-﻿using PeteBrown.Devices.Midi;
+﻿
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,6 +16,8 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+
+using PeteBrown.Devices.Midi;
 
 namespace TestMidiApp
 {
@@ -36,6 +38,10 @@ namespace TestMidiApp
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
+            MidiInputList.ItemsSource = _watcher.InputPortDescriptors;
+            MidiOutputList.ItemsSource = _watcher.OutputPortDescriptors;
+
+
             _watcher.InputPortsEnumerated += _watcher_InputPortsEnumerated;
             _watcher.OutputPortsEnumerated += _watcher_OutputPortsEnumerated;
 
@@ -137,5 +143,20 @@ namespace TestMidiApp
             UpdateTempo();
         }
 
+        private void TestNrpn_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (MidiOutPort port in _clock.OutputPorts)
+            {
+                MidiMessageHelper.SendNrpnMessage(port, byte.Parse(Channel.Text), UInt16.Parse(ParameterNumber.Text), UInt16.Parse(ParameterValue.Text), true);
+            }
+        }
+
+        private void TestRpn_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (MidiOutPort port in _clock.OutputPorts)
+            {
+                MidiMessageHelper.SendRpnMessage(port, byte.Parse(Channel.Text), UInt16.Parse(ParameterNumber.Text), UInt16.Parse(ParameterValue.Text), true);
+            }
+        }
     }
 }
