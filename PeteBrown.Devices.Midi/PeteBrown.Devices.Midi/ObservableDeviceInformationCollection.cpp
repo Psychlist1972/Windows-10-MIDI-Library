@@ -8,14 +8,38 @@ using namespace PeteBrown::Devices::Midi;
 
 using namespace Windows::Devices::Enumeration;
 using namespace Windows::Foundation::Collections;
+using namespace Windows::UI::Core;
 using namespace Windows::UI::Xaml::Interop;
 
-ObservableDeviceInformationCollection::ObservableDeviceInformationCollection()
+
+ObservableDeviceInformationCollection::ObservableDeviceInformationCollection(bool dispatchNotificationEvent)
 {
+	_dispatchNotificationEvent = dispatchNotificationEvent;
+
 	_backingCollection = ref new Platform::Collections::Vector<DeviceInformation ^>();
 
 	_backingCollection->VectorChanged += ref new VectorChangedEventHandler<DeviceInformation ^>(this, &ObservableDeviceInformationCollection::OnVectorChanged);
+
+
+	if (_dispatchNotificationEvent)
+	{
+		auto window = CoreWindow::GetForCurrentThread();
+
+		if (window)
+		{
+			_dispatcher = window->Dispatcher;
+		}
+		else
+		{
+			_dispatcher = nullptr;
+			_dispatchNotificationEvent = false;
+
+			// throw an exception of some sort? This is a constructor, so not a great idea
+		}
+
+	}
 }
+
 
 Windows::Foundation::Collections::IIterator<DeviceInformation ^> ^ ObservableDeviceInformationCollection::First()
 {
@@ -81,30 +105,78 @@ void ObservableDeviceInformationCollection::ReplaceAll(const Platform::Array<Dev
 // this is where all the observable stuff happens
 void ObservableDeviceInformationCollection::OnVectorChanged(Windows::Foundation::Collections::IObservableVector<DeviceInformation ^> ^sender, IVectorChangedEventArgs ^event)
 {
-	// first, rethrow this for C++ users
-	VectorChanged(this, event);
-
-	//// second, do the c#-friendly IObservableCollection bit
-	//NotifyCollectionChangedEventArgs^ args;
-	//
-	//switch (event->CollectionChange)
-	//{
-	//case CollectionChange::ItemChanged:
-	//	args = ref new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction::Replace);
-	//	break;
-	//case CollectionChange::ItemInserted:
-	//	args = ref new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction::Add);
-	//	break;
-	//case CollectionChange::ItemRemoved:
-	//	args = ref new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction::Remove);
-	//	break;
-	//case CollectionChange::Reset:
-	//	args = ref new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction::Reset);
-	//	break;
-	//};
-	//
-	//
+	if (_dispatchNotificationEvent && _dispatcher)
+	{
+		_dispatcher->RunAsync(CoreDispatcherPriority::Normal,
+			ref new DispatchedHandler([=]()
+		{
+			// do the c#-friendly IObservableCollection bit
+			NotifyCollectionChangedEventArgs^ args;
+			auto newItems = ref new Platform::Collections::Vector<DeviceInformation ^>();
+			auto oldItems = ref new Platform::Collections::Vector<DeviceInformation ^>();
 
 
-	//CollectionChanged(this, e);
+			switch (event->CollectionChange)
+			{
+			case CollectionChange::ItemInserted:
+				newItems->Append(_backingCollection->GetAt(event->Index));
+				args = ref new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction::Add, newItems, nullptr, event->Index, -1);
+				break;
+
+			case CollectionChange::ItemRemoved:
+				args = ref new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction::Remove, nullptr, oldItems, -1, event->Index);
+				break;
+
+			case CollectionChange::ItemChanged:
+				args = ref new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction::Replace, nullptr, oldItems, event->Index, event->Index);
+				break;
+
+			case CollectionChange::Reset:
+				args = ref new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction::Reset, nullptr, nullptr, -1, -1);
+				break;
+			};
+
+			// NotifyCollectionChanged for C#/.NET
+			CollectionChanged(this, args);
+
+			// also rethrow this for C++ users
+			VectorChanged(this, event);
+		}));
+	}
+
+
+	// TODO!
+
 }
+
+//Platform::Object ^ PeteBrown::Devices::Midi::ObservableDeviceInformationCollection::GetAt(unsigned int index)
+//{
+//	throw ref new Platform::NotImplementedException();
+//	// TODO: insert return statement here
+//}
+//
+//Windows::UI::Xaml::Interop::IBindableVectorView ^ PeteBrown::Devices::Midi::ObservableDeviceInformationCollection::GetView()
+//{
+//	throw ref new Platform::NotImplementedException();
+//	// TODO: insert return statement here
+//}
+
+//bool PeteBrown::Devices::Midi::ObservableDeviceInformationCollection::IndexOf(Platform::Object ^value, unsigned int *index)
+//{
+//	return false;
+//}
+//
+//void PeteBrown::Devices::Midi::ObservableDeviceInformationCollection::SetAt(unsigned int index, Platform::Object ^value)
+//{
+//	throw ref new Platform::NotImplementedException();
+//}
+//
+//void PeteBrown::Devices::Midi::ObservableDeviceInformationCollection::InsertAt(unsigned int index, Platform::Object ^value)
+//{
+//	throw ref new Platform::NotImplementedException();
+//}
+//
+//void PeteBrown::Devices::Midi::ObservableDeviceInformationCollection::Append(Platform::Object ^value)
+//{
+//	throw ref new Platform::NotImplementedException();
+//}

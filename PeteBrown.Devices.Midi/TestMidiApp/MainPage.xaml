@@ -5,8 +5,9 @@
     xmlns:local="using:TestMidiApp"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:enumeration="using:Windows.Devices.Enumeration"
     mc:Ignorable="d">
-    
+
     <!-- It's not meant to be pretty! -->
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -33,20 +34,26 @@
 
             <Grid Grid.Row="0">
                 <TextBlock Text="Inputs" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="40" />
-                <ItemsControl x:Name="MidiInputList" Margin="20, 60, 20, 20">
+                <ItemsControl x:Name="MidiInputList" Margin="20, 60, 20, 20" ItemsSource="{x:Bind ViewModel.InputPortDescriptors, Mode=OneWay}">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}"  FontSize="20" />
+                        <DataTemplate x:DataType="enumeration:DeviceInformation">
+                            <StackPanel Orientation="Vertical" Margin="5">
+                                <TextBlock Text="{x:Bind Name}" FontSize="20"/>
+                                <TextBox Text="{x:Bind Id, Mode=OneTime}" FontSize="11" BorderBrush="Transparent" Background="Transparent" IsReadOnly="True" />
+                            </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </Grid>
             <Grid Grid.Row="1">
                 <TextBlock Text="Outputs" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="40" />
-                <ItemsControl x:Name="MidiOutputList" Margin="20, 60, 20, 20">
+                <ItemsControl x:Name="MidiOutputList" Margin="20, 60, 20, 20" ItemsSource="{x:Bind ViewModel.OutputPortDescriptors, Mode=OneWay}">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}" FontSize="20"/>
+                        <DataTemplate x:DataType="enumeration:DeviceInformation">
+                            <StackPanel Orientation="Vertical" Margin="5">
+                                <TextBlock Text="{x:Bind Name}" FontSize="20"/>
+                                <TextBox Text="{x:Bind Id, Mode=OneTime}" FontSize="11" BorderBrush="Transparent" Background="Transparent" IsReadOnly="True" />
+                            </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -68,14 +75,21 @@
                 Click="Stop_Click"/>
 
             <Slider x:Name="Tempo" HorizontalContentAlignment="Center" 
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Center"
-                Margin="250"
-                Minimum="20" Maximum="320" Value="120" 
-                ValueChanged="Tempo_ValueChanged"/>
+                    Value="{x:Bind ViewModel.ClockTempo, Mode=TwoWay}"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Margin="250"
+                    Minimum="20" Maximum="320" 
+                    StepFrequency="0.5"
+                    TickFrequency="10"
+                    TickPlacement="Outside"/>
 
-            <TextBlock x:Name="TempoText" FontSize="150" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="50"
-                   Text="120 bpm" />
+            <!-- There's no validation on the range entered here -->            
+            <TextBox x:Name="TempoText" FontSize="150" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="50"
+                     Text="{x:Bind ViewModel.ClockTempo, Mode=TwoWay}" 
+                     TextAlignment="Center"
+                     BorderBrush="Transparent"
+                     Background="Transparent"/>
         </Grid>
 
         <Grid Grid.Row="2" Grid.Column="1" Background="AliceBlue">

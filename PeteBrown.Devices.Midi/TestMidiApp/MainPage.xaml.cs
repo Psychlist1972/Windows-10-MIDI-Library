@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Navigation;
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 using PeteBrown.Devices.Midi;
+using TestMidiApp.ViewModel;
 
 namespace TestMidiApp
 {
@@ -26,108 +27,34 @@ namespace TestMidiApp
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private MidiClockGenerator _clock = new MidiClockGenerator();
-        private MidiDeviceWatcher _watcher = new MidiDeviceWatcher();
+
+        private MainViewModel _vm;
 
         public MainPage()
         {
             this.InitializeComponent();
 
+            _vm = new MainViewModel();
+
             Loaded += MainPage_Loaded;
+        }
+
+        public MainViewModel ViewModel
+        {
+            get { return _vm; }
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            MidiInputList.ItemsSource = _watcher.InputPortDescriptors;
-            MidiOutputList.ItemsSource = _watcher.OutputPortDescriptors;
-
-
-            _watcher.InputPortsEnumerated += _watcher_InputPortsEnumerated;
-            _watcher.OutputPortsEnumerated += _watcher_OutputPortsEnumerated;
-
-            // the built-in synth requires an add-on package for the solution, and isn't very good anyway
-            _watcher.IgnoreBuiltInWavetableSynth = true;
-
-            // make sure you have the event handlers wired up before this.
-            _watcher.EnumerateInputPorts();
-            _watcher.EnumerateOutputPorts();
-
-            UpdateTempo();
-
         }
 
-        private void UpdateTempo()
-        {
-            if (TempoText != null)
-                TempoText.Text = Tempo.Value + " bpm";
-
-            _clock.SetTempo((float)Tempo.Value);
-        }
-
-
-        // All output ports have been enumerated
-        private async void _watcher_OutputPortsEnumerated(MidiDeviceWatcher sender)
-        {
-            // event fires on a different thread, so be sure to dispatch to interact with UI
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
-            {
-                foreach (var info in sender.OutputPortDescriptors)
-                {
-                    // This diagnostic info is how you can see the IDs of all the ports.
-                    System.Diagnostics.Debug.WriteLine("- Output -----");
-                    System.Diagnostics.Debug.WriteLine(info.Name);
-                    System.Diagnostics.Debug.WriteLine(info.Id);
-                    System.Diagnostics.Debug.WriteLine("--------------");
-
-                    var port = (MidiOutPort)await MidiOutPort.FromIdAsync(info.Id);
-
-                    // If you don't want the clock on all ports, here's where you'd change the code
-                    if (port != null)
-                        _clock.OutputPorts.Add(port);
-                    else
-                        System.Diagnostics.Debug.WriteLine("Failed to create port with id " + info.Id);
-                }
-
-                if (_clock.OutputPorts.Count > 0)
-                {
-                    System.Diagnostics.Debug.WriteLine("About to create clock.");
-
-                    _clock.SetTempo((float)Tempo.Value);
-                    _clock.SendMidiStartMessage = true; 
-                    _clock.SendMidiStopMessage = true;
-
-                    Start.IsEnabled = true;
-                    Stop.IsEnabled = false;
-                }
-                else
-                {
-                    System.Diagnostics.Debug.WriteLine("No output ports to wire up.");
-
-                    Start.IsEnabled = false;
-                    Stop.IsEnabled = false;
-                }
-            });
-        }
-
-
-        // All input ports have been enumerated
-        private void _watcher_InputPortsEnumerated(MidiDeviceWatcher sender)
-        {
-            foreach (var info in sender.InputPortDescriptors)
-            {
-                System.Diagnostics.Debug.WriteLine("- Input -----");
-                System.Diagnostics.Debug.WriteLine(info.Name);
-                System.Diagnostics.Debug.WriteLine(info.Id);
-                System.Diagnostics.Debug.WriteLine("--------------");
-            }
-        }
 
         private void Start_Click(object sender, RoutedEventArgs e)
         {
             Start.IsEnabled = false;
             Stop.IsEnabled = true;
 
-            _clock.Start();
+            _vm.StartClock();
         }
 
         private void Stop_Click(object sender, RoutedEventArgs e)
@@ -135,28 +62,28 @@ namespace TestMidiApp
             Start.IsEnabled = true;
             Stop.IsEnabled = false;
 
-            _clock.Stop();
+            _vm.StopClock();
         }
 
-        private void Tempo_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        {
-            UpdateTempo();
-        }
+        //private void Tempo_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        //{
+        //    UpdateTempo();
+        //}
 
         private void TestNrpn_Click(object sender, RoutedEventArgs e)
         {
-            foreach (MidiOutPort port in _clock.OutputPorts)
-            {
-                MidiMessageHelper.SendNrpnMessage(port, byte.Parse(Channel.Text), UInt16.Parse(ParameterNumber.Text), UInt16.Parse(ParameterValue.Text), true);
-            }
+            //foreach (MidiOutPort port in _clock.OutputPorts)
+            //{
+            //    MidiMessageHelper.SendNrpnMessage(port, byte.Parse(Channel.Text), UInt16.Parse(ParameterNumber.Text), UInt16.Parse(ParameterValue.Text), true);
+            //}
         }
 
         private void TestRpn_Click(object sender, RoutedEventArgs e)
         {
-            foreach (MidiOutPort port in _clock.OutputPorts)
-            {
-                MidiMessageHelper.SendRpnMessage(port, byte.Parse(Channel.Text), UInt16.Parse(ParameterNumber.Text), UInt16.Parse(ParameterValue.Text), true);
-            }
+            //foreach (MidiOutPort port in _clock.OutputPorts)
+            //{
+            //    MidiMessageHelper.SendRpnMessage(port, byte.Parse(Channel.Text), UInt16.Parse(ParameterNumber.Text), UInt16.Parse(ParameterValue.Text), true);
+            //}
         }
     }
 }

@@ -12,8 +12,8 @@ using namespace PeteBrown::Devices::Midi;
 
 MidiDeviceWatcher::MidiDeviceWatcher()
 {
-    _inputPortDescriptors = ref new ObservableDeviceInformationCollection();
-    _outputPortDescriptors = ref new ObservableDeviceInformationCollection();
+    _inputPortDescriptors = ref new ObservableDeviceInformationCollection(true);
+    _outputPortDescriptors = ref new ObservableDeviceInformationCollection(true);
 }
 
 

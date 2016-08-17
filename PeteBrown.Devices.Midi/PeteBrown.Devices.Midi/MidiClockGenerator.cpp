@@ -97,6 +97,12 @@ void MidiClockGenerator::ThreadWorker(IAsyncAction^ operation)
 
         nextTime = lastTime.QuadPart + _tickInterval;
 
+
+
+		// consider trying concurrency::wait in here. May be too chunky, though.
+
+
+
         if (errorAccumulator >= 1.0)
         {
             // get the whole number part of the error and then remove it from
@@ -151,18 +157,23 @@ void MidiClockGenerator::Stop()
     OutputDebugString(_T(" MidiClock: Stop request received.\n"));
 }
 
-void MidiClockGenerator::SetTempo(float bpm)
+
+double MidiClockGenerator::Tempo::get()
 {
-    const int ppqn = 24;
+	return _tempoBpm;
+}
 
-    _tempoBpm = bpm;
+void MidiClockGenerator::Tempo::set(double tempo)
+{
+	const int ppqn = 24;
 
-    // this is going to have rounding errors
-    // need to do this at a higher resolution or something
-    // and account for drift over time
-    _tickInterval = (LONGLONG)(std::trunc(((double)_performanceCounterFrequency.QuadPart / (bpm / 60.0F)) / ppqn));
+	_tempoBpm = tempo;
 
-    _tickTruncationError = (double)(((double)_performanceCounterFrequency.QuadPart / (bpm / 60.0F)) / ppqn) - _tickInterval;
+	// this is going to have rounding errors
+	// we account for this in the clock worker thread function
+	_tickInterval = (LONGLONG)(std::trunc(((double)_performanceCounterFrequency.QuadPart / (_tempoBpm / 60.0F)) / ppqn));
 
-    OutputDebugString(_T(" MidiClock: Tempo set.\n"));
+	_tickTruncationError = (double)(((double)_performanceCounterFrequency.QuadPart / (_tempoBpm / 60.0F)) / ppqn) - _tickInterval;
+
+	OutputDebugString(_T(" MidiClock: Tempo set.\n"));
 }

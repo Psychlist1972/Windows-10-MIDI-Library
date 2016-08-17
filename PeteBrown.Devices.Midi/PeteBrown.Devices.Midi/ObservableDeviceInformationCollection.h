@@ -10,23 +10,29 @@ namespace PeteBrown
 			// NOTE: This doesn't yet fully work with C# XAML binding. Change notifications after the fact are not
 			// reflected in UI controls.
 			//
-			// TODO: INOtifyPropertyChanged
+			// TODO: INotifyPropertyChanged
 
 			[Windows::Foundation::Metadata::WebHostHidden]
 			public ref class ObservableDeviceInformationCollection sealed :
-				Windows::Foundation::Collections::IObservableVector<Windows::Devices::Enumeration::DeviceInformation^>
+				Windows::Foundation::Collections::IObservableVector<Windows::Devices::Enumeration::DeviceInformation^>,
+				Windows::UI::Xaml::Interop::INotifyCollectionChanged				
 			{
 			private:
 				Platform::Collections::Vector<Windows::Devices::Enumeration::DeviceInformation^>^ _backingCollection;
+				
+				Windows::UI::Core::CoreDispatcher^ _dispatcher;
+				bool _dispatchNotificationEvent;
 
 			public:
-				ObservableDeviceInformationCollection();
+				//ObservableDeviceInformationCollection() : ObservableDeviceInformationCollection(true) {}
+				//ObservableDeviceInformationCollection(Windows::UI::Core::CoreDispatcher^ dispatcherForUIEvents);
+				ObservableDeviceInformationCollection(bool dispatchNotificationEvent);
 
 				// Inherited via IObservableVector
 				virtual event Windows::Foundation::Collections::VectorChangedEventHandler<Windows::Devices::Enumeration::DeviceInformation ^> ^ VectorChanged;
 
 				// Inherited via INotifyCollectionChanged
-				//virtual event Windows::UI::Xaml::Interop::NotifyCollectionChangedEventHandler ^ CollectionChanged;
+				virtual event Windows::UI::Xaml::Interop::NotifyCollectionChangedEventHandler ^ CollectionChanged;
 
 				virtual property unsigned int Size { unsigned int get() { return _backingCollection->Size; }}
 
@@ -44,6 +50,7 @@ namespace PeteBrown
 				virtual void ReplaceAll(const Platform::Array<Windows::Devices::Enumeration::DeviceInformation ^, 1U> ^items);
 
 				void OnVectorChanged(Windows::Foundation::Collections::IObservableVector<Windows::Devices::Enumeration::DeviceInformation ^> ^sender, Windows::Foundation::Collections::IVectorChangedEventArgs ^event);
+
 			};
 		};
 	};

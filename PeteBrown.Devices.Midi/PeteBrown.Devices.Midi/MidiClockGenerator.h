@@ -14,8 +14,10 @@ namespace PeteBrown
             public ref class MidiClockGenerator sealed
             {
             private:
-                bool _isRunning;
-                float _tempoBpm;
+				const double DEFAULT_BPM = 120.0;
+
+				bool _isRunning;
+                double _tempoBpm = DEFAULT_BPM;						// this is a double to help avoid needing converters when used in binding in C#. Example: slider control
 
                 LARGE_INTEGER _performanceCounterFrequency;			// ticks per second of the performance counter
                 LONGLONG _tickInterval;
@@ -50,9 +52,13 @@ namespace PeteBrown
                 void Stop();
 
                 /// <summary>
-                /// Set the tempo in Beats Per Minute. For example, 120.
+                /// Get/Set the tempo in Beats Per Minute. For example, 120.
                 /// </summary>
-                void SetTempo(float bpm);
+				property double Tempo
+				{
+					double get();
+					void set(double tempo);
+				}
 
                 /// <summary>
                 /// Collection of MidiOutPorts to send the clock to. Add valid ports to this collection before starting the clock.
