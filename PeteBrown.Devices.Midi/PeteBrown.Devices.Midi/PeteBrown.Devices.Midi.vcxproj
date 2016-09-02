@@ -210,8 +210,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="IObservableDeviceInformationCollection.h" />
     <ClInclude Include="MidiDeviceWatcher.h" />
     <ClInclude Include="MidiMessageHelper.h" />
+    <ClInclude Include="MidiNrpnMessage.h" />
+    <ClInclude Include="MidiPitchBendSensitivityRpnMessage.h" />
+    <ClInclude Include="MidiRpnMessageType.h" />
     <ClInclude Include="ObservableDeviceInformationCollection.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="MidiClockGenerator.h" />
@@ -219,6 +223,8 @@
   <ItemGroup>
     <ClCompile Include="MidiDeviceWatcher.cpp" />
     <ClCompile Include="MidiMessageHelper.cpp" />
+    <ClCompile Include="MidiNrpnMessage.cpp" />
+    <ClCompile Include="MidiPitchBendSensitivityRpnMessage.cpp" />
     <ClCompile Include="ObservableDeviceInformationCollection.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

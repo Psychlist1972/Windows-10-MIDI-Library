@@ -5,7 +5,7 @@ using namespace Windows::Devices::Enumeration;
 using namespace Windows::Devices::Midi;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
-
+using namespace Windows::UI::Core;
 
 using namespace PeteBrown::Devices::Midi;
 
@@ -14,20 +14,6 @@ MidiDeviceWatcher::MidiDeviceWatcher()
 {
     _inputPortDescriptors = ref new ObservableDeviceInformationCollection(true);
     _outputPortDescriptors = ref new ObservableDeviceInformationCollection(true);
-}
-
-
-
-// list of output ports
-ObservableDeviceInformationCollection^ MidiDeviceWatcher::OutputPortDescriptors::get()
-{
-    return _outputPortDescriptors;
-}
-
-// list of input ports
-ObservableDeviceInformationCollection^ MidiDeviceWatcher::InputPortDescriptors::get()
-{
-    return _inputPortDescriptors;
 }
 
 
@@ -86,20 +72,23 @@ void MidiDeviceWatcher::EnumerateOutputPorts()
 
 void MidiDeviceWatcher::OnInputDeviceAdded(DeviceWatcher^ sender, DeviceInformation^ args)
 {
+	//OutputDebugString(L" >>> MidiDeviceWatcher::OnInputDeviceAdded\n");
+
     _inputPortDescriptors->Append(args);
 }
 
 void MidiDeviceWatcher::OnInputDeviceRemoved(DeviceWatcher^ sender, DeviceInformationUpdate^ args)
 {
-    // TODO: is there a more efficient way to search a vector in C++?
-    for (unsigned int i = 0; i < _inputPortDescriptors->Size; i++)
-    {
-        if (_inputPortDescriptors->GetAt(i)->Id == args->Id)
-        {
-            _inputPortDescriptors->RemoveAt(i);
-            break;
-        }
-    }
+	//OutputDebugString(L" >>> MidiDeviceWatcher::OnInputDeviceRemoved\n");
+
+	for (unsigned int i = 0; i < _inputPortDescriptors->Size; i++)
+	{
+		if (_inputPortDescriptors->GetAt(i)->Id == args->Id)
+		{
+			_inputPortDescriptors->RemoveAt(i);
+			break;
+		}
+	}
 }
 
 void MidiDeviceWatcher::OnInputDeviceUpdated(DeviceWatcher^ sender, DeviceInformationUpdate^ args)
@@ -117,9 +106,9 @@ void MidiDeviceWatcher::OnInputDeviceEnumerationCompleted(DeviceWatcher^ sender,
 
 void MidiDeviceWatcher::OnOutputDeviceAdded(DeviceWatcher^ sender, DeviceInformation^ args)
 {
-    OutputDebugString(L" >>> output enumerated> ");
-    OutputDebugString(args->Id->Data());
-    OutputDebugString(L"\n");
+	//OutputDebugString(L" >>> MidiDeviceWatcher::OnOutputDeviceAdded\n");
+ //   OutputDebugString(args->Id->Data());
+ //   OutputDebugString(L"\n");
 
 
     if (_ignoreBuiltInWavetableSynth)
@@ -128,28 +117,29 @@ void MidiDeviceWatcher::OnOutputDeviceAdded(DeviceWatcher^ sender, DeviceInforma
 
         if (id.find(WAVETABLE_SYNTH_ID_STRING) != std::string::npos)
         {
-            OutputDebugString(L" >>> output port was wavetable synth\n");
+            OutputDebugString(L" >>>>> output port was wavetable synth\n");
             return;
         }
     }
 
     // add to collection
     _outputPortDescriptors->Append(args);
-    OutputDebugString(L" >>> output port added to vector\n");
+   // OutputDebugString(L" >>>>> output port added to vector\n");
 
 }
 
 void MidiDeviceWatcher::OnOutputDeviceRemoved(DeviceWatcher^ sender, DeviceInformationUpdate^ args)
 {
-    // TODO: is there a more efficient way to search a vector in C++?
-    for (unsigned int i = 0; i < _outputPortDescriptors->Size; i++)
-    {
-        if (_outputPortDescriptors->GetAt(i)->Id == args->Id)
-        {
-            _outputPortDescriptors->RemoveAt(i);
-            break;
-        }
-    }
+	//OutputDebugString(L" >>> MidiDeviceWatcher::OnOutputDeviceRemoved\n");
+
+	for (unsigned int i = 0; i < _outputPortDescriptors->Size; i++)
+	{
+		if (_outputPortDescriptors->GetAt(i)->Id == args->Id)
+		{
+			_outputPortDescriptors->RemoveAt(i);
+			break;
+		}
+	}
 }
 
 void MidiDeviceWatcher::OnOutputDeviceUpdated(DeviceWatcher^ sender, DeviceInformationUpdate^ args)

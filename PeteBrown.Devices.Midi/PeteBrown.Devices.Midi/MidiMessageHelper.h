@@ -34,6 +34,9 @@ namespace PeteBrown
                 inline static byte BuildMidiStatusByte(byte message, byte channel) { return message << 4 | channel; }
 
             public:		
+
+				// TODO: Add in versions of these that are extension methods to the MIDIOutPort and use a strongly typed Rpn and NRPN types, including a base NRPN class)
+
 				/// <summary>
 				/// Send a Non-Registered Parameter Number Message. These messages vary by manufacturer.
 				/// If you are immediately following this message with other values for the same parameter, pass a false value for sendNullClosing. 

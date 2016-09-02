@@ -36,16 +36,11 @@ namespace TestMidiApp
 
             _vm = new MainViewModel();
 
-            Loaded += MainPage_Loaded;
         }
 
         public MainViewModel ViewModel
         {
             get { return _vm; }
-        }
-
-        private void MainPage_Loaded(object sender, RoutedEventArgs e)
-        {
         }
 
 

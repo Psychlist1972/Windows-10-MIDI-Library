@@ -43,7 +43,11 @@ namespace PeteBrown
                 void OnOutputDeviceUpdated(Windows::Devices::Enumeration::DeviceWatcher^ sender, Windows::Devices::Enumeration::DeviceInformationUpdate^ args);
                 void OnOutputDeviceEnumerationCompleted(Windows::Devices::Enumeration::DeviceWatcher^ sender, Platform::Object^ args);
 
-                bool _ignoreBuiltInWavetableSynth = true;
+				bool _ignoreBuiltInWavetableSynth = true;
+
+
+				// TEMP
+				Windows::UI::Core::CoreDispatcher^ _dispatcher;
 
             public:
                 MidiDeviceWatcher();
@@ -64,16 +68,17 @@ namespace PeteBrown
                 /// </summary>
                 property ObservableDeviceInformationCollection^ OutputPortDescriptors
                 {
-					ObservableDeviceInformationCollection^ get();
+					ObservableDeviceInformationCollection^ get() { return _outputPortDescriptors; }
                 }
+	
 
                 /// <summary>
                 /// All enumerated MIDI Input port DeviceInformation objects. Uses this information to open the MIDI ports.
-                /// ** NOTE: This collection type is likely to change to a more C#-friendly type. **
+                /// 
                 /// </summary>
                 property ObservableDeviceInformationCollection^ InputPortDescriptors
                 {
-					ObservableDeviceInformationCollection^ get();
+					ObservableDeviceInformationCollection^ get() { return _inputPortDescriptors; }
                 }
 
                 /// <summary>

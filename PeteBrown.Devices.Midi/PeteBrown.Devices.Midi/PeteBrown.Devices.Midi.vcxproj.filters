@@ -5,19 +5,71 @@
       <UniqueIdentifier>0bf41b2a-d656-465b-b34b-945c2428d1fd</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Messages">
+      <UniqueIdentifier>{cb4fb01c-bb90-4336-8260-d5fa44b7a0bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Messages\Rpn">
+      <UniqueIdentifier>{19a80193-6f79-4ece-839e-1fb6837be176}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{0529b59a-a6c7-45e7-81d1-f6cc4913de29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Support">
+      <UniqueIdentifier>{0357d1f8-79d0-48f6-a631-a75d381d1d1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Devices">
+      <UniqueIdentifier>{0553ecf3-38ae-43d5-9566-2c76a5448ebe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Messages\Nrpn">
+      <UniqueIdentifier>{4347d2ed-9896-434e-bc3a-ca277f986524}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="MidiClockGenerator.cpp" />
-    <ClCompile Include="MidiDeviceWatcher.cpp" />
-    <ClCompile Include="MidiMessageHelper.cpp" />
-    <ClCompile Include="ObservableDeviceInformationCollection.cpp" />
+    <ClCompile Include="MidiPitchBendSensitivityRpnMessage.cpp">
+      <Filter>Messages\Rpn</Filter>
+    </ClCompile>
+    <ClCompile Include="MidiMessageHelper.cpp">
+      <Filter>Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="MidiClockGenerator.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="ObservableDeviceInformationCollection.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="MidiDeviceWatcher.cpp">
+      <Filter>Devices</Filter>
+    </ClCompile>
+    <ClCompile Include="MidiNrpnMessage.cpp">
+      <Filter>Messages\Nrpn</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="MidiClockGenerator.h" />
-    <ClInclude Include="MidiDeviceWatcher.h" />
-    <ClInclude Include="MidiMessageHelper.h" />
-    <ClInclude Include="ObservableDeviceInformationCollection.h" />
+    <ClInclude Include="MidiPitchBendSensitivityRpnMessage.h">
+      <Filter>Messages\Rpn</Filter>
+    </ClInclude>
+    <ClInclude Include="MidiRpnMessageType.h">
+      <Filter>Messages\Rpn</Filter>
+    </ClInclude>
+    <ClInclude Include="MidiMessageHelper.h">
+      <Filter>Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="MidiClockGenerator.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="ObservableDeviceInformationCollection.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="MidiDeviceWatcher.h">
+      <Filter>Devices</Filter>
+    </ClInclude>
+    <ClInclude Include="MidiNrpnMessage.h">
+      <Filter>Messages\Nrpn</Filter>
+    </ClInclude>
+    <ClInclude Include="IObservableDeviceInformationCollection.h">
+      <Filter>Support</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

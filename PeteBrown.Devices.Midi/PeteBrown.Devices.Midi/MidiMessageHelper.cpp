@@ -22,7 +22,6 @@ void MidiMessageHelper::SendNrpnMessage(MidiOutPort^ outputPort, byte channel, u
 	// Originally was going to use an IBuffer, but to do that required about as many UWP ref objects as 
 	// doing it with strongly-typed messages
 
-
 	// caching these messages (other than using IBuffer) doesn't work as they are immutable after construction
 	auto nrpnMessageParameterNumberMsb = ref new MidiControlChangeMessage(channel, NRPN_PARAMETER_MSB, msb(parameterNumber));
 	auto nrpnMessageParameterNumberLsb = ref new MidiControlChangeMessage(channel, NRPN_PARAMETER_LSB, lsb(parameterNumber));

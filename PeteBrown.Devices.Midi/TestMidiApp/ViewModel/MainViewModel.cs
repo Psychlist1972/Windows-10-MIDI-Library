@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.Devices.Midi;
+using Windows.UI.Xaml.Interop;
 
 namespace TestMidiApp.ViewModel
 {
@@ -26,8 +27,8 @@ namespace TestMidiApp.ViewModel
 
 #if DEBUG
             // these are for debugging only
-            _watcher.OutputPortDescriptors.CollectionChanged += OutputPortDescriptors_CollectionChanged;
-            _watcher.InputPortDescriptors.CollectionChanged += InputPortDescriptors_CollectionChanged;
+            //_watcher.OutputPortDescriptors.CollectionChanged += OutputPortDescriptors_CollectionChanged;
+            //_watcher.InputPortDescriptors.CollectionChanged += InputPortDescriptors_CollectionChanged;
             _watcher.OutputPortDescriptors.VectorChanged += OutputPortDescriptors_VectorChanged;
             _watcher.InputPortDescriptors.VectorChanged += InputPortDescriptors_VectorChanged;
 #endif
@@ -43,43 +44,55 @@ namespace TestMidiApp.ViewModel
 
         }
 
+        private void OLDInputPortDescriptors_VectorChanged(IBindableObservableVector vector, object e)
+        {
+            System.Diagnostics.Debug.WriteLine("InputPortDescriptors - IBindableObservableVector.VectorChanged: ");
+        }
+
+        private void OLDOutputPortDescriptors_VectorChanged(IBindableObservableVector vector, object e)
+        {
+            System.Diagnostics.Debug.WriteLine("OutputPortDescriptors - IBindableObservableVector.VectorChanged: ");
+        }
+
 #if DEBUG
         private void InputPortDescriptors_VectorChanged(Windows.Foundation.Collections.IObservableVector<DeviceInformation> sender, Windows.Foundation.Collections.IVectorChangedEventArgs @event)
         {
-            System.Diagnostics.Debug.WriteLine("InputPortDescriptors - VectorChanged: " + @event.CollectionChange);
+            System.Diagnostics.Debug.WriteLine("InputPortDescriptors - VectorChanged ");
+            System.Diagnostics.Debug.WriteLine(@event.CollectionChange);
         }
 
         private void OutputPortDescriptors_VectorChanged(Windows.Foundation.Collections.IObservableVector<DeviceInformation> sender, Windows.Foundation.Collections.IVectorChangedEventArgs @event)
         {
-            System.Diagnostics.Debug.WriteLine("OutputPortDescriptors - VectorChanged: " + @event.CollectionChange);
+            System.Diagnostics.Debug.WriteLine("OutputPortDescriptors - VectorChanged");
+            System.Diagnostics.Debug.WriteLine(@event.CollectionChange);
         }
 
-        private void InputPortDescriptors_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("InputPortDescriptors - CollectionChanged: " + e.Action);
+        //private void InputPortDescriptors_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        //{
+        //    System.Diagnostics.Debug.WriteLine("InputPortDescriptors - CollectionChanged: " + e.Action);
 
-            if (e.NewItems != null)
-            {
-                foreach (DeviceInformation item in e.NewItems)
-                {
-                    System.Diagnostics.Debug.WriteLine(" -- " + item.Name);
-                }
-            }
+        //    if (e.NewItems != null)
+        //    {
+        //        foreach (DeviceInformation item in e.NewItems)
+        //        {
+        //            System.Diagnostics.Debug.WriteLine(" -- " + item.Name);
+        //        }
+        //    }
 
-        }
+        //}
 
-        private void OutputPortDescriptors_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("OutputPortDescriptors - CollectionChanged: " + e.Action);
+        //private void OutputPortDescriptors_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        //{
+        //    System.Diagnostics.Debug.WriteLine("OutputPortDescriptors - CollectionChanged: " + e.Action);
 
-            if (e.NewItems != null)
-            {
-                foreach (DeviceInformation item in e.NewItems)
-                {
-                    System.Diagnostics.Debug.WriteLine(" -- " + item.Name);
-                }
-            }
-        }
+        //    if (e.NewItems != null)
+        //    {
+        //        foreach (DeviceInformation item in e.NewItems)
+        //        {
+        //            System.Diagnostics.Debug.WriteLine(" -- " + item.Name);
+        //        }
+        //    }
+        //}
 #endif
 
         public ObservableDeviceInformationCollection InputPortDescriptors
@@ -92,6 +105,27 @@ namespace TestMidiApp.ViewModel
             get { return _watcher.OutputPortDescriptors; }
         }
 
+
+        //public IBindableObservableVector InputPortDescriptorsAsBindable
+        //{
+        //    get { return _watcher.InputPortDescriptors as IBindableObservableVector; }
+        //}
+
+        //public IBindableObservableVector OutputPortDescriptorsAsBindable
+        //{
+        //    get { return _watcher.OutputPortDescriptors as IBindableObservableVector; }
+        //}
+
+
+        //public ObservableDeviceInformationCollection InputPortDescriptors
+        //{
+        //    get { return _watcher.InputPortDescriptors; }
+        //}
+
+        //public ObservableDeviceInformationCollection OutputPortDescriptors
+        //{
+        //    get { return _watcher.OutputPortDescriptors; }
+        //}
 
         public void StartClock()
         {
@@ -116,7 +150,7 @@ namespace TestMidiApp.ViewModel
         // All output ports have been enumerated
         private async void _watcher_OutputPortsEnumerated(MidiDeviceWatcher sender)
         {
-            foreach (var info in sender.OutputPortDescriptors)
+            foreach (DeviceInformation info in sender.OutputPortDescriptors)
             {
                 // This diagnostic info is how you can see the IDs of all the ports.
                 System.Diagnostics.Debug.WriteLine("- Output -----");
@@ -150,7 +184,7 @@ namespace TestMidiApp.ViewModel
         // All input ports have been enumerated
         private void _watcher_InputPortsEnumerated(MidiDeviceWatcher sender)
         {
-            foreach (var info in sender.InputPortDescriptors)
+            foreach (DeviceInformation info in sender.InputPortDescriptors)
             {
                 System.Diagnostics.Debug.WriteLine("- Input -----");
                 System.Diagnostics.Debug.WriteLine(info.Name);
