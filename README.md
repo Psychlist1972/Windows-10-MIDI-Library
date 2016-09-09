@@ -71,6 +71,33 @@ TODO: I need to surface the add/remove events through this class rather than jus
 
 # Notes about the ObservableDeviceEnumerationCollection
 
-This is the moral equivalent to C# ObservableCollection<DeviceInformation>. That's not available in C# CX without taking a dependency on the .NET framework, which I didn't want to do. If you're curious about what it takes to make something bindable and observable in C++, take a look. You can also see how to implement multiple interfaces while resolving naming conflicts.
+This is the moral equivalent to C# ObservableCollection<DeviceInformation&lt;DeviceInformation&gt;. That collection is not available in C# CX without taking a dependency on the .NET framework, which I didn't want to do. Additionally, Vector gets projected as just a plain old List, so that is not observable in C#.
 
-There are likely ways to simplify the class. Happy to take pull requests. :)
+If you're curious about what it takes to make something bindable and observable in C++, take a look. You can also see how to implement multiple interfaces while resolving naming conflicts. Much of the design of this class was shamelessly pulled from the collections.h implementation of Vector&lt;T&gt;
+
+```C++
+    namespace WF =		::Windows::Foundation;
+    namespace WFC =		::Windows::Foundation::Collections;
+    namespace WUXI =	::Windows::UI::Xaml::Interop;
+    namespace WDE =		::Windows::Devices::Enumeration;
+    namespace Details = ::Platform::Collections::Details;
+
+    namespace PeteBrown
+    {
+	    namespace Devices
+	    {
+		    namespace Midi
+		    {
+			    [Windows::Foundation::Metadata::WebHostHidden]
+			    public ref class ObservableDeviceInformationCollection sealed :
+				    IObservableDeviceInformationCollection,
+				    public WFC::IObservableVector<CollectionItemType^>,
+				    WUXI::IBindableObservableVector
+			    {
+			        ...
+			    };
+			};
+	    };
+	};
+
+There are likely ways to simplify the class or otherwise improve it. Happy to take pull requests. :)
