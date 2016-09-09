@@ -71,7 +71,7 @@ TODO: I need to surface the add/remove events through this class rather than jus
 
 # Notes about the ObservableDeviceEnumerationCollection
 
-This is the moral equivalent to C# ObservableCollection<DeviceInformation&lt;DeviceInformation&gt;. That collection is not available in C# CX without taking a dependency on the .NET framework, which I didn't want to do. Additionally, Vector gets projected as just a plain old List, so that is not observable in C#.
+This is the moral equivalent to C# ObservableCollection&lt;DeviceInformation&gt;. That collection is not available in C# CX without taking a dependency on the .NET framework, which I didn't want to do. Additionally, Vector gets projected as just a plain old List, so that is not observable in C#.
 
 If you're curious about what it takes to make something bindable and observable in C++, take a look. You can also see how to implement multiple interfaces while resolving naming conflicts. Much of the design of this class was shamelessly pulled from the collections.h implementation of Vector&lt;T&gt;
 
