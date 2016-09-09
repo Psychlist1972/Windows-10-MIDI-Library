@@ -101,5 +101,5 @@ Binding in C# is enabled through the Windows::UI::Xaml::Interop::IBindableObserv
 			};
 	    };
 	};
-
+```
 There are likely ways to simplify the class or otherwise improve it. Happy to take pull requests. :)
