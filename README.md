@@ -32,6 +32,7 @@ The MIDI beat clock is an implementation of a tempo-driven and pretty accurate b
 
 Optionally, the clock can send MIDI Start and Stop messages. These are the messages that sequencers and drum machines listen for to start or stop their playback.
 
+```C#
     MidiClockGenerator clock = new MidiClockGenerator();
 
     // set tempo in BPM
@@ -48,6 +49,7 @@ Optionally, the clock can send MIDI Start and Stop messages. These are the messa
     
     // stop the clock
     clock.Stop();
+```
 
 The clock runs in a tight loop, which will pretty much tie up an entire core on your PC or device. This is necessary to maintain tight timings. Feel free to look at the C++ code and adapt it to your own needs should you want to do more than just send out clock messages.
 
