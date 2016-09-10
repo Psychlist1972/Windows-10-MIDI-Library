@@ -5,8 +5,8 @@ Want to use a read-to-go version? The NuGet package is usually pretty up to date
 https://www.nuget.org/packages/PeteBrown.Devices.Midi/
 
 # Requirements
-- Visual Studio 2015
-- Windows 10 Anniversary Edition SDK
+- Visual Studio 2015 (or higher)
+- Windows 10 Anniversary Edition SDK (or higher)
 
 ## Working and usable features
 - Beat Clock generator for stand-alone beat clock usage (not for sequencers or similar apps)
