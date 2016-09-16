@@ -70,7 +70,7 @@ TODO: I need to surface the add/remove events through this class rather than jus
 
 ## RPN and NRPN
 
-(coming soon. Incomplete/experimental at the moment)
+(coming soon. Incomplete/experimental at the moment. The intent here is for you to be able to use RPN and NRPN aggregate messages in a way very similar to standard messages. This also requires an input processor, so you'll see a MidiInPortEx in addition to the message types.)
 
 
 # Samples
