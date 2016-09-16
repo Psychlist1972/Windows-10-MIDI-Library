@@ -212,8 +212,11 @@
   <ItemGroup>
     <ClInclude Include="IObservableDeviceInformationCollection.h" />
     <ClInclude Include="MidiDeviceWatcher.h" />
+    <ClInclude Include="MidiInPortEx.h" />
     <ClInclude Include="MidiMessageHelper.h" />
-    <ClInclude Include="MidiNrpnMessage.h" />
+    <ClInclude Include="MidiNrpnParameterValueChangeMessage.h" />
+    <ClInclude Include="MidiNrpnParameterNullMessage.h" />
+    <ClInclude Include="MidiNrpnValueChangeMessage.h" />
     <ClInclude Include="MidiPitchBendSensitivityRpnMessage.h" />
     <ClInclude Include="MidiRpnMessageType.h" />
     <ClInclude Include="ObservableDeviceInformationCollection.h" />
@@ -222,8 +225,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MidiDeviceWatcher.cpp" />
+    <ClCompile Include="MidiInPortEx.cpp" />
     <ClCompile Include="MidiMessageHelper.cpp" />
-    <ClCompile Include="MidiNrpnMessage.cpp" />
+    <ClCompile Include="MidiNrpnParameterValueChangeMessage.cpp" />
+    <ClCompile Include="MidiNrpnParameterNullMessage.cpp" />
+    <ClCompile Include="MidiNrpnValueChangeMessage.cpp" />
     <ClCompile Include="MidiPitchBendSensitivityRpnMessage.cpp" />
     <ClCompile Include="ObservableDeviceInformationCollection.cpp" />
     <ClCompile Include="pch.cpp">

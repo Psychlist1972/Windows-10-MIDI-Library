@@ -1,18 +1,18 @@
 #pragma once
 
-
 namespace PeteBrown
 {
 	namespace Devices
 	{
 		namespace Midi
 		{
-			public ref class MidiPitchBendSensitivityRpnMessage sealed
+			ref class MidiNrpnParameterNullMessage sealed
+
 			{
 			public:
-				MidiPitchBendSensitivityRpnMessage();
-
+				MidiNrpnParameterNullMessage();
 			};
 		};
 	};
 };
+

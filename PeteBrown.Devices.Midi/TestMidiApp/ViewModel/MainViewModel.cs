@@ -25,13 +25,9 @@ namespace TestMidiApp.ViewModel
             _watcher.InputPortsEnumerated += _watcher_InputPortsEnumerated;
             _watcher.OutputPortsEnumerated += _watcher_OutputPortsEnumerated;
 
-#if DEBUG
             // these are for debugging only
-            //_watcher.OutputPortDescriptors.CollectionChanged += OutputPortDescriptors_CollectionChanged;
-            //_watcher.InputPortDescriptors.CollectionChanged += InputPortDescriptors_CollectionChanged;
             _watcher.OutputPortDescriptors.VectorChanged += OutputPortDescriptors_VectorChanged;
             _watcher.InputPortDescriptors.VectorChanged += InputPortDescriptors_VectorChanged;
-#endif
 
             // the built-in synth requires an add-on package for the solution, and isn't very good anyway
             // this is not a required setting. However, if you don't ignore it, you need to add the DLS package
@@ -44,17 +40,7 @@ namespace TestMidiApp.ViewModel
 
         }
 
-        private void OLDInputPortDescriptors_VectorChanged(IBindableObservableVector vector, object e)
-        {
-            System.Diagnostics.Debug.WriteLine("InputPortDescriptors - IBindableObservableVector.VectorChanged: ");
-        }
 
-        private void OLDOutputPortDescriptors_VectorChanged(IBindableObservableVector vector, object e)
-        {
-            System.Diagnostics.Debug.WriteLine("OutputPortDescriptors - IBindableObservableVector.VectorChanged: ");
-        }
-
-#if DEBUG
         private void InputPortDescriptors_VectorChanged(Windows.Foundation.Collections.IObservableVector<DeviceInformation> sender, Windows.Foundation.Collections.IVectorChangedEventArgs @event)
         {
             System.Diagnostics.Debug.WriteLine("InputPortDescriptors - VectorChanged ");
@@ -67,33 +53,6 @@ namespace TestMidiApp.ViewModel
             System.Diagnostics.Debug.WriteLine(@event.CollectionChange);
         }
 
-        //private void InputPortDescriptors_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("InputPortDescriptors - CollectionChanged: " + e.Action);
-
-        //    if (e.NewItems != null)
-        //    {
-        //        foreach (DeviceInformation item in e.NewItems)
-        //        {
-        //            System.Diagnostics.Debug.WriteLine(" -- " + item.Name);
-        //        }
-        //    }
-
-        //}
-
-        //private void OutputPortDescriptors_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("OutputPortDescriptors - CollectionChanged: " + e.Action);
-
-        //    if (e.NewItems != null)
-        //    {
-        //        foreach (DeviceInformation item in e.NewItems)
-        //        {
-        //            System.Diagnostics.Debug.WriteLine(" -- " + item.Name);
-        //        }
-        //    }
-        //}
-#endif
 
         public ObservableDeviceInformationCollection InputPortDescriptors
         {
@@ -106,35 +65,14 @@ namespace TestMidiApp.ViewModel
         }
 
 
-        //public IBindableObservableVector InputPortDescriptorsAsBindable
-        //{
-        //    get { return _watcher.InputPortDescriptors as IBindableObservableVector; }
-        //}
-
-        //public IBindableObservableVector OutputPortDescriptorsAsBindable
-        //{
-        //    get { return _watcher.OutputPortDescriptors as IBindableObservableVector; }
-        //}
-
-
-        //public ObservableDeviceInformationCollection InputPortDescriptors
-        //{
-        //    get { return _watcher.InputPortDescriptors; }
-        //}
-
-        //public ObservableDeviceInformationCollection OutputPortDescriptors
-        //{
-        //    get { return _watcher.OutputPortDescriptors; }
-        //}
-
         public void StartClock()
         {
-
+            _clock.Start();
         }
 
         public void StopClock()
         {
-
+            _clock.Stop();
         }
 
         public double ClockTempo

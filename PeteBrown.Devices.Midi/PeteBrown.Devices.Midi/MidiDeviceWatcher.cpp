@@ -18,25 +18,15 @@ MidiDeviceWatcher::MidiDeviceWatcher()
 
 
 
-bool MidiDeviceWatcher::IgnoreBuiltInWavetableSynth::get()
-{
-    return _ignoreBuiltInWavetableSynth;
-}
-
-void MidiDeviceWatcher::IgnoreBuiltInWavetableSynth::set(bool value)
-{
-    _ignoreBuiltInWavetableSynth = value;
-}
-
-
-
-
-
 
 void MidiDeviceWatcher::EnumerateInputPorts()
 {
+	// TODO: Possibly allow consuming code to override this selector with AQS?
+	// https://msdn.microsoft.com/en-us/library/windows/desktop/bb266512(v=vs.85).aspx
+	auto selector = MidiInPort::GetDeviceSelector();
+
     // create the watcher
-    _inputWatcher = DeviceInformation::CreateWatcher(MidiInPort::GetDeviceSelector());
+    _inputWatcher = DeviceInformation::CreateWatcher(selector);
 
     // wire up event handler
     _inputWatcher->Added += ref new TypedEventHandler<DeviceWatcher ^, DeviceInformation ^>(this, &MidiDeviceWatcher::OnInputDeviceAdded);
@@ -54,7 +44,11 @@ void MidiDeviceWatcher::EnumerateOutputPorts()
 {
     // create the watcher
 
-    _outputWatcher = DeviceInformation::CreateWatcher(MidiOutPort::GetDeviceSelector());
+	// TODO: Possibly allow consuming code to override this selector with AQS?
+	// https://msdn.microsoft.com/en-us/library/windows/desktop/bb266512(v=vs.85).aspx
+	auto selector = MidiOutPort::GetDeviceSelector();
+
+    _outputWatcher = DeviceInformation::CreateWatcher(selector);
 
     // wire up event handler
     _outputWatcher->Added += ref new TypedEventHandler<DeviceWatcher ^, DeviceInformation ^>(this, &MidiDeviceWatcher::OnOutputDeviceAdded);
@@ -72,15 +66,11 @@ void MidiDeviceWatcher::EnumerateOutputPorts()
 
 void MidiDeviceWatcher::OnInputDeviceAdded(DeviceWatcher^ sender, DeviceInformation^ args)
 {
-	//OutputDebugString(L" >>> MidiDeviceWatcher::OnInputDeviceAdded\n");
-
     _inputPortDescriptors->Append(args);
 }
 
 void MidiDeviceWatcher::OnInputDeviceRemoved(DeviceWatcher^ sender, DeviceInformationUpdate^ args)
 {
-	//OutputDebugString(L" >>> MidiDeviceWatcher::OnInputDeviceRemoved\n");
-
 	for (unsigned int i = 0; i < _inputPortDescriptors->Size; i++)
 	{
 		if (_inputPortDescriptors->GetAt(i)->Id == args->Id)
@@ -106,12 +96,9 @@ void MidiDeviceWatcher::OnInputDeviceEnumerationCompleted(DeviceWatcher^ sender,
 
 void MidiDeviceWatcher::OnOutputDeviceAdded(DeviceWatcher^ sender, DeviceInformation^ args)
 {
-	//OutputDebugString(L" >>> MidiDeviceWatcher::OnOutputDeviceAdded\n");
- //   OutputDebugString(args->Id->Data());
- //   OutputDebugString(L"\n");
-
-
-    if (_ignoreBuiltInWavetableSynth)
+	// TODO: Look into simply adding criteria to AQS in the original watcher
+	// rather than filter it out manually here
+    if (IgnoreBuiltInWavetableSynth)
     {
         std::wstring id(args->Id->Data());
 
@@ -124,14 +111,10 @@ void MidiDeviceWatcher::OnOutputDeviceAdded(DeviceWatcher^ sender, DeviceInforma
 
     // add to collection
     _outputPortDescriptors->Append(args);
-   // OutputDebugString(L" >>>>> output port added to vector\n");
-
 }
 
 void MidiDeviceWatcher::OnOutputDeviceRemoved(DeviceWatcher^ sender, DeviceInformationUpdate^ args)
 {
-	//OutputDebugString(L" >>> MidiDeviceWatcher::OnOutputDeviceRemoved\n");
-
 	for (unsigned int i = 0; i < _outputPortDescriptors->Size; i++)
 	{
 		if (_outputPortDescriptors->GetAt(i)->Id == args->Id)

@@ -1,12 +1,16 @@
 #pragma once
 
+
+#include <wrl.h>
+#include <robuffer.h>
+
+using namespace Windows::Storage::Streams;
+using namespace Microsoft::WRL;
+
 namespace PeteBrown
 {
     namespace Devices
     {
-
-        // This is not yet implemented, and so is private for now.
-
         namespace Midi
         {
             public ref class MidiMessageHelper sealed
@@ -29,33 +33,30 @@ namespace PeteBrown
 
                 MidiMessageHelper();
 
-                inline static byte msb(unsigned short value) { return (value >> 7) & 0x7F; }
-                inline static byte lsb(unsigned short value) { return value & 0x7F;	}
-                inline static byte BuildMidiStatusByte(byte message, byte channel) { return message << 4 | channel; }
+                //inline static byte msb(unsigned short value) { return (value >> 7) & 0x7F; }
+                //inline static byte lsb(unsigned short value) { return value & 0x7F;	}
+                //inline static byte BuildMidiStatusByte(byte message, byte channel) { return message << 4 | channel; }
 
             public:		
 
-				// TODO: Add in versions of these that are extension methods to the MIDIOutPort and use a strongly typed Rpn and NRPN types, including a base NRPN class)
+				inline static byte msb(unsigned short value) { return ConvertTo7Bit((byte)(value >> 7)); }
+				inline static byte lsb(unsigned short value) { return ConvertTo7Bit((byte)value); }
+				inline static byte BuildMidiStatusByte(byte message, byte channel) { return message << 4 | channel; }
 
-				/// <summary>
-				/// Send a Non-Registered Parameter Number Message. These messages vary by manufacturer.
-				/// If you are immediately following this message with other values for the same parameter, pass a false value for sendNullClosing. 
-				/// </summary>
-				static void SendNrpnMessage(Windows::Devices::Midi::MidiOutPort^ outputPort, byte channel, unsigned short parameterNumber, unsigned short parameterValue, bool sendNullClosing);
-				inline static void SendNrpnMessage(Windows::Devices::Midi::MidiOutPort^ outputPort, byte channel, unsigned short parameterNumber, unsigned short parameterValue)
+				inline static byte ConvertTo7Bit(byte value) { return value & 0x7f; }
+				inline static unsigned short ConvertTo14Bit(unsigned short value) { return value & 0x3FFF; }
+
+
+				static void GetRawDataBytesFromBuffer(IBuffer^ buffer, byte* bytes)
 				{
-					SendNrpnMessage(outputPort, channel, parameterNumber, parameterValue, true);
+					ComPtr<IBufferByteAccess> bufferByteAccess;
+					reinterpret_cast<IInspectable*>(buffer)->QueryInterface(IID_PPV_ARGS(&bufferByteAccess));
+
+					bytes = nullptr;
+
+					bufferByteAccess->Buffer(&bytes);
 				}
 
-				/// <summary>
-				/// Send a Registered Parameter Number Message. These messages are standardized.
-				/// If you are immediately following this message with other values for the same parameter, pass a false value for sendNullClosing. 
-				/// </summary>
-				static void SendRpnMessage(Windows::Devices::Midi::MidiOutPort^ outputPort, byte channel, unsigned short parameterNumber, unsigned short parameterValue, bool sendNullClosing);
-				inline static void SendRpnMessage(Windows::Devices::Midi::MidiOutPort^ outputPort, byte channel, unsigned short parameterNumber, unsigned short parameterValue)
-				{
-					SendRpnMessage(outputPort, channel, parameterNumber, parameterValue, true);
-				}
 
             };
         };

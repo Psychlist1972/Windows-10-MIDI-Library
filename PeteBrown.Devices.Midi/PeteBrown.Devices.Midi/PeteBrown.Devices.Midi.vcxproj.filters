@@ -23,6 +23,15 @@
     <Filter Include="Messages\Nrpn">
       <UniqueIdentifier>{4347d2ed-9896-434e-bc3a-ca277f986524}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Extensions">
+      <UniqueIdentifier>{253e2b20-7b5a-47d4-9f1e-1c28146ec93c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ShowControl">
+      <UniqueIdentifier>{d78a6216-9de3-45f9-998e-865153de7748}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VisualControl">
+      <UniqueIdentifier>{99d6556a-cbab-4792-9317-4788bfae4ec7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -41,8 +50,17 @@
     <ClCompile Include="MidiDeviceWatcher.cpp">
       <Filter>Devices</Filter>
     </ClCompile>
-    <ClCompile Include="MidiNrpnMessage.cpp">
+    <ClCompile Include="MidiNrpnParameterNullMessage.cpp">
       <Filter>Messages\Nrpn</Filter>
+    </ClCompile>
+    <ClCompile Include="MidiNrpnValueChangeMessage.cpp">
+      <Filter>Messages\Nrpn</Filter>
+    </ClCompile>
+    <ClCompile Include="MidiNrpnParameterValueChangeMessage.cpp">
+      <Filter>Messages\Nrpn</Filter>
+    </ClCompile>
+    <ClCompile Include="MidiInPortEx.cpp">
+      <Filter>Extensions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -65,11 +83,20 @@
     <ClInclude Include="MidiDeviceWatcher.h">
       <Filter>Devices</Filter>
     </ClInclude>
-    <ClInclude Include="MidiNrpnMessage.h">
-      <Filter>Messages\Nrpn</Filter>
-    </ClInclude>
     <ClInclude Include="IObservableDeviceInformationCollection.h">
       <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="MidiNrpnParameterNullMessage.h">
+      <Filter>Messages\Nrpn</Filter>
+    </ClInclude>
+    <ClInclude Include="MidiNrpnValueChangeMessage.h">
+      <Filter>Messages\Nrpn</Filter>
+    </ClInclude>
+    <ClInclude Include="MidiNrpnParameterValueChangeMessage.h">
+      <Filter>Messages\Nrpn</Filter>
+    </ClInclude>
+    <ClInclude Include="MidiInPortEx.h">
+      <Filter>Extensions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

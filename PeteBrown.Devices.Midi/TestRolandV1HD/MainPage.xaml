@@ -1,0 +1,121 @@
+﻿<Page
+    x:Class="TestRolandV1HD.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TestRolandV1HD"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:enumeration="using:Windows.Devices.Enumeration"    
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <Style TargetType="Button" x:Key="PadStyle">
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="Width" Value="150" />
+            <Setter Property="Height" Value="150" />
+            <Setter Property="Background" Value="Orange" />
+            <Setter Property="FontSize" Value="60" />
+        </Style>
+    </Page.Resources>
+    
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                
+                <TextBlock Text="Available Outputs" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="40" />
+                <ListBox x:Name="MidiOutputList" Margin="20, 60, 20, 20" ItemsSource="{x:Bind OutputPortDescriptors, Mode=OneWay}"
+                         SelectionChanged="MidiOutputList_SelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="enumeration:DeviceInformation">
+                            <StackPanel Orientation="Vertical" Margin="5">
+                                <TextBlock Text="{x:Bind Name}" FontSize="20"/>
+                                <TextBox Text="{x:Bind Id, Mode=OneTime}" FontSize="11" BorderBrush="Transparent" Background="Transparent" IsReadOnly="True" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <TextBox Text="0" Grid.Row="1" x:Name="MidiChannel" Header="MIDI Channel (0-15)" HorizontalAlignment="Stretch" FontSize="40"/>
+
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <TextBlock Text="Roland V-1HD Screens" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="40" />
+
+                        <Grid HorizontalAlignment="Center"  VerticalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Button x:Name="Pad1" Grid.Row="0" Grid.Column="0" Style="{StaticResource PadStyle}" Content="1" Click="Pad1_Click" />
+                            <Button x:Name="Pad2" Grid.Row="0" Grid.Column="1" Style="{StaticResource PadStyle}" Content="2" Click="Pad2_Click" />
+                            <Button x:Name="Pad3" Grid.Row="0" Grid.Column="2" Style="{StaticResource PadStyle}" Content="3" Click="Pad3_Click"/>
+                            <Button x:Name="Pad4" Grid.Row="0" Grid.Column="3" Style="{StaticResource PadStyle}" Content="4" Click="Pad4_Click"/>
+                        </Grid>
+
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <TextBlock Text="MIDI Clock" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="40" />
+
+                        <Button x:Name="Start" Content="Start" HorizontalAlignment="Left" FontSize="50" Margin="10" Padding="30"
+                                Click="Start_Click"/>
+
+                        <Button x:Name="Stop" Content="Stop" HorizontalAlignment="Right" FontSize="50" Margin="10" Padding="30"
+                                Click="Stop_Click"/>
+
+                        <Slider x:Name="Tempo" HorizontalContentAlignment="Center" 
+                                Value="{x:Bind ClockTempo, Mode=TwoWay}"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                Margin="250, 10, 250, 10"
+                                Minimum="20" Maximum="320" 
+                                StepFrequency="0.5"
+                                TickFrequency="10"
+                                TickPlacement="Outside"/>
+
+                        <!-- There's no validation on the range entered here -->
+                        <TextBox x:Name="TempoText" FontSize="80" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="50"
+                                    Text="{x:Bind ClockTempo, Mode=TwoWay}" 
+                                    TextAlignment="Center"
+                                    BorderBrush="Transparent"
+                                    Background="Transparent"/>
+
+                    </Grid>
+                    
+                </Grid>
+                
+
+
+
+            </Grid>
+            
+        </Grid>
+
+    </Grid>
+</Page>

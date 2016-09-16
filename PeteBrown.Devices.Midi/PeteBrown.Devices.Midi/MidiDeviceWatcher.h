@@ -43,9 +43,6 @@ namespace PeteBrown
                 void OnOutputDeviceUpdated(Windows::Devices::Enumeration::DeviceWatcher^ sender, Windows::Devices::Enumeration::DeviceInformationUpdate^ args);
                 void OnOutputDeviceEnumerationCompleted(Windows::Devices::Enumeration::DeviceWatcher^ sender, Platform::Object^ args);
 
-				bool _ignoreBuiltInWavetableSynth = true;
-
-
 				// TEMP
 				Windows::UI::Core::CoreDispatcher^ _dispatcher;
 
@@ -84,11 +81,7 @@ namespace PeteBrown
                 /// <summary>
                 /// True if enumeration should ignore the built-in Wavetable synth. This synth requires an additional page for store apps.
                 /// </summary>
-                property bool IgnoreBuiltInWavetableSynth
-                {
-                    bool get();
-                    void set(bool);
-                }
+				property bool IgnoreBuiltInWavetableSynth;
 
 
                 /// <summary>
