@@ -15,7 +15,10 @@ https://www.nuget.org/packages/PeteBrown.Devices.Midi/
 - 
 ## Experimental or incomplete features
 - RPN and NRPN message formatting
-- MidiInPortEx for help with processing incoming logical (RPN, NRPN etc.) messages
+- MidiInPortEx for help with processing incoming logical (RPN, NRPN etc.) messages- 
+
+## Investigating
+- MPE. People who want this know what it is. :)
 
 ## Questions or concerns?
 - Issues and discussion here on GitHub or, Twitter: @pete_brown
@@ -68,6 +71,22 @@ TODO: I need to surface the add/remove events through this class rather than jus
 ## RPN and NRPN
 
 (coming soon. Incomplete/experimental at the moment)
+
+
+# Samples
+
+These are samples, not production-ready applications.
+
+## Main Sample App
+
+This app shows how to use the majority of the features of the MIDI API. You can see input and output ports, send clock messages, etc. It uses a ViewModel-based approach for binding to the UI.
+
+## Roland V-1HD Sample app
+
+This app shows how to use the library to simply switch between screens on the Roland V-1HD switcher. Requires that the switcher have MIDI input Rx turned on, and currently assumes A/B mode and changes only the selection from the A bank. Very simple to modify to your own needs.
+
+This app uses a flat approach (no ViewModel) for binding to the UI.
+
 
 # Notes about the ObservableDeviceEnumerationCollection
 
