@@ -87,6 +87,8 @@ This app shows how to use the library to simply switch between screens on the Ro
 
 This app uses a flat approach (no ViewModel) for binding to the UI.
 
+![Roland V-1HD](/doc/img/v1hd_front_main_gal.jpg)
+
 
 # Notes about the ObservableDeviceEnumerationCollection
 
