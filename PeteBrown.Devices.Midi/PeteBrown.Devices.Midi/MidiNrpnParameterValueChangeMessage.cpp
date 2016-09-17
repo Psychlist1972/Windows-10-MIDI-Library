@@ -7,13 +7,16 @@ using namespace PeteBrown::Devices::Midi;
 
 MidiNrpnParameterValueChangeMessage::MidiNrpnParameterValueChangeMessage()
 {
-	_rawData = ref new Windows::Storage::Streams::Buffer(BYTES_IN_MESSAGE);
+	_rawData = ref new Windows::Storage::Streams::Buffer(TOTAL_BYTES_IN_MESSAGE);
+	_rawData->Length = TOTAL_BYTES_IN_MESSAGE;
 
-	_type = Windows::Devices::Midi::MidiMessageType::None;
+	_rawBytes = MidiMessageHelper::GetRawDataBytesFromBuffer(_rawData);
 
-	//AccessRawDataBytes();
+//	_type = Windows::Devices::Midi::MidiMessageType::None;
+	_type = Windows::Devices::Midi::MidiMessageType::ControlChange;
 
 
+	BuildBaseMessages();
 }
 
 

@@ -67,18 +67,12 @@ namespace TestMidiApp
 
         private void TestNrpn_Click(object sender, RoutedEventArgs e)
         {
-            //foreach (MidiOutPort port in _clock.OutputPorts)
-            //{
-            //    MidiMessageHelper.SendNrpnMessage(port, byte.Parse(Channel.Text), UInt16.Parse(ParameterNumber.Text), UInt16.Parse(ParameterValue.Text), true);
-            //}
+            _vm.SendNrpn(byte.Parse(Channel.Text), UInt16.Parse(ParameterNumber.Text), UInt16.Parse(ParameterValue.Text));
         }
 
         private void TestRpn_Click(object sender, RoutedEventArgs e)
         {
-            //foreach (MidiOutPort port in _clock.OutputPorts)
-            //{
-            //    MidiMessageHelper.SendRpnMessage(port, byte.Parse(Channel.Text), UInt16.Parse(ParameterNumber.Text), UInt16.Parse(ParameterValue.Text), true);
-            //}
+            System.Diagnostics.Debug.WriteLine("Not implemented");
         }
     }
 }

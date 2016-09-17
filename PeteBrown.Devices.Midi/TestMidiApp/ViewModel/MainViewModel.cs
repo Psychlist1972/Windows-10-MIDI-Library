@@ -133,6 +133,26 @@ namespace TestMidiApp.ViewModel
 
 
 
+        // just sends the message out of all channels
+        public void SendNrpn(byte channel, ushort parameterNumber, ushort parameterValue)
+        {
+            var message = new MidiNrpnParameterValueChangeMessage();
+
+            message.ParameterNumber = parameterNumber;
+            message.ParameterValue = parameterValue;
+            message.Channel = channel;
+
+            // just using the clock OutputPorts because it's convenient. 
+            foreach (MidiOutPort port in _clock.OutputPorts)
+            {
+                System.Diagnostics.Debug.WriteLine("Sending NRPN: Channel: {0}, Parameter: {1}, Value: {2} on interface {3}", message.Channel, message.ParameterNumber, message.ParameterValue, port.DeviceId);
+                port.SendMessage(message);
+            }
+        }
+
+
+
+
 
         private void NotifyPropertyChanged ([CallerMemberName]string propertyName ="")
         {

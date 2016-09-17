@@ -1,7 +1,10 @@
 #pragma once
 
+#include <Windows.h>
+#include <tchar.h>
 #include <wrl.h>
 #include <robuffer.h>
+#include <string>
 
 #include "MidiMessageHelper.h"
 
@@ -30,38 +33,135 @@ namespace PeteBrown
 
 				// message order is ParameterNumberMsb, ParameterNumberLsb, ParameterValueMsb, ParameterValueLsb
 				// each message is sent as a MIDI control change message
-				const int BYTES_IN_MESSAGE = 12;
+				// These need to match what is being sent out. Buffer is initialized using these values, and some pointer math is based on them
+				const int TOTAL_MIDI_MESSAGE_COUNT = 4;
+				const int BYTES_IN_MIDI_CHANNEL_MESSAGE = 3;
+				const int TOTAL_BYTES_IN_MESSAGE = BYTES_IN_MIDI_CHANNEL_MESSAGE * TOTAL_MIDI_MESSAGE_COUNT;
 
-				const int PARAMETER_MSB_BYTE_OFFSET = 2;
-				const int PARAMETER_LSB_BYTE_OFFSET = 5;
 
-				const int VALUE_MSB_BYTE_OFFSET = 8;
-				const int VALUE_LSB_BYTE_OFFSET = 11;
+				const int PARAMETER_MSB_DATA1_BYTE_OFFSET = 1;
+				const int PARAMETER_MSB_DATA2_BYTE_OFFSET = 2;
+				const int PARAMETER_LSB_DATA1_BYTE_OFFSET = 4;
+				const int PARAMETER_LSB_DATA2_BYTE_OFFSET = 5;
+
+				const int VALUE_MSB_DATA1_BYTE_OFFSET = 7;
+				const int VALUE_MSB_DATA2_BYTE_OFFSET = 8;
+				const int VALUE_LSB_DATA1_BYTE_OFFSET = 10;
+				const int VALUE_LSB_DATA2_BYTE_OFFSET = 11;
 
 
 
 				unsigned short _parameterNumber;
-				unsigned short _value;
+				unsigned short _parameterValue;
+				byte _channel;
 
+				// IBuffer required for Windows 10 MIDI implementation. _rawBytes required so we can write to the IBuffer
+				// _rawBytes is initialized properly in the constructor
 				Windows::Storage::Streams::IBuffer ^ _rawData;
 				byte * _rawBytes = nullptr;
 
 				Windows::Foundation::TimeSpan _timestamp;
 				Windows::Devices::Midi::MidiMessageType _type;
 
+				inline void SetByte(const int offset, byte value)
+				{
+					*(_rawBytes + offset) = value;
+				}
+
+				// Update the Data 2 bytes just for the Parameter Number MSB and LSB
+				void UpdateParameterNumberBytes()
+				{
+					SetByte(PARAMETER_LSB_DATA2_BYTE_OFFSET, MidiMessageHelper::lsb7(_parameterNumber));
+					SetByte(PARAMETER_MSB_DATA2_BYTE_OFFSET, MidiMessageHelper::msb7(_parameterNumber));
+				}
+
+				// Update the Data 2 bytes just for the Parameter Value MSB and LSB
+				void UpdateValueBytes()
+				{
+					SetByte(VALUE_LSB_DATA2_BYTE_OFFSET, MidiMessageHelper::lsb7(_parameterValue));
+					SetByte(VALUE_MSB_DATA2_BYTE_OFFSET, MidiMessageHelper::msb7(_parameterValue));
+				}
+
+				// Update all MIDI status bytes. Usually this is because the channel changed
+				void UpdateStatusBytes()
+				{
+					const byte controlChange = 11;
+
+					byte status = MidiMessageHelper::BuildMidiStatusByte(controlChange, _channel);
+
+					// update each status byte in the array.
+					for (int i = 0; i < TOTAL_MIDI_MESSAGE_COUNT; i++)
+					{
+						SetByte(BYTES_IN_MIDI_CHANNEL_MESSAGE * i, status);
+					}
+				}
+
+				// Build the base messages. This is done once on construction.
+				void BuildBaseMessages()
+				{
+					// build the base message layout
+
+					SetByte(PARAMETER_LSB_DATA1_BYTE_OFFSET, NRPN_PARAMETER_LSB);
+					SetByte(PARAMETER_MSB_DATA1_BYTE_OFFSET, NRPN_PARAMETER_MSB);
+
+					SetByte(VALUE_LSB_DATA1_BYTE_OFFSET, NRPN_VALUE_LSB);
+					SetByte(VALUE_MSB_DATA1_BYTE_OFFSET, NRPN_VALUE_MSB);
+
+					UpdateStatusBytes();
+				}
+
 			public:
 				MidiNrpnParameterValueChangeMessage();
 
+							
+				/// <summary>
+				/// 14 bit number for the Non Registered Parameter Number. This will be split into MSB and LSB messages.
+				/// </summary>
+				property unsigned short ParameterNumber
+				{
+					unsigned short get()
+					{
+						return _parameterNumber;
+					}
+					void set(unsigned short value)
+					{
+						_parameterNumber = value;
+						UpdateParameterNumberBytes();
+					}
+				}
 
 				/// <summary>
-				/// 14 bit number for the Non Registered Parameter Number
+				/// 14 bit value. This will be split into MSB and LSB messages.
 				/// </summary>
-				property unsigned short ParameterNumber;
+				property unsigned short ParameterValue
+				{
+					unsigned short get()
+					{
+						return _parameterValue;
+					}
+					void set(unsigned short value)
+					{
+						_parameterValue = value;
+						UpdateValueBytes();
+					}
+				}
 
 				/// <summary>
-				/// 14 bit value
+				/// MIDI channel for the message
 				/// </summary>
-				property unsigned short Value;
+				property byte Channel
+				{
+					byte get()
+					{
+						return _channel;
+					}
+					void set(byte value)
+					{
+						_channel = value;
+						UpdateStatusBytes();
+					}
+
+				}
 
 
 				// Inherited via IMidiMessage
@@ -69,6 +169,10 @@ namespace PeteBrown
 				{
 					Windows::Storage::Streams::IBuffer ^ get()
 					{
+						//wchar_t s[256];
+						//swprintf(s, 255, L"--- RawData requested. Length is %d\n", _rawData->Length);
+						//OutputDebugString(s);
+
 						return _rawData;
 					}
 				}
