@@ -36,6 +36,10 @@ The MIDI beat clock is an implementation of a tempo-driven and pretty accurate b
 Optionally, the clock can send MIDI Start and Stop messages. These are the messages that sequencers and drum machines listen for to start or stop their playback.
 
 ```C#
+    using PeteBrown.Devices.Midi;
+    
+    ...
+    
     MidiClockGenerator clock = new MidiClockGenerator();
 
     // set tempo in BPM
@@ -84,6 +88,10 @@ TODO: I need to surface the add/remove events through this class rather than jus
 
 Example code for sending an NRPN message:
 ```c#
+    using PeteBrown.Devices.Midi;
+    
+    ...
+    
     var message = new MidiNrpnParameterValueChangeMessage();
 
     // parameter number and value are 14 bit values
@@ -93,6 +101,8 @@ Example code for sending an NRPN message:
     message.ParameterValue = parameterValue;
     message.Channel = channel;
 
+    // send the message through a MidiOutPort just like 
+    // any built-in MIDI message
     outputPort.SendMessage(message);
 ```
 
