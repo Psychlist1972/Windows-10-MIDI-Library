@@ -59,9 +59,9 @@ The clock runs in a tight loop, which will pretty much tie up an entire core on 
 Note also that I do not recommend sending clock messages from C#. You'll find that garbage collections and the other things which make C# so great to use can cause jitter and drift in the clock. You may be able to get it to work reasonably well for some window of BPM, but in my experience, C++ is a better tool for this job.
 
 ### Status
-[x] Check clock timing with external device
-[x] Send start / stop messages
-[x] Send MIDI beat clock
+- [x] Check clock timing with external device
+- [x] Send start / stop messages
+- [x] Send MIDI beat clock
 
 ## MIDI Device Watcher
 
@@ -72,9 +72,9 @@ UWP makes it easy with the DeviceWatcher class, but the results are not easily b
 The best way to see this is to look in the MainViewModel in the TestMidiApp project. The UI consists of two lists (input and output) in the main XAML page.
 
 ### Status
-[x] Observable collection updated on device add/remove
-[x] Raise event when enumeration complete
-[ ] Raise additional events on device add/remove
+- [x] Observable collection updated on device add/remove
+- [x] Raise event when enumeration complete
+- [ ] Raise additional events on device add/remove
 
 TODO: I need to surface the add/remove events through this class rather than just use the collection. This will enable an app to respond in non-UI ways as well.
 
@@ -97,16 +97,16 @@ Example code for sending an NRPN message:
 ```
 
 ### Status
-[x] Send NRPN Value and Parameter Change message
-[ ] Send NRPN Value Change message
-[ ] Send NRPN Parameter Null message
+- [x] Send NRPN Value and Parameter Change message
+- [ ] Send NRPN Value Change message
+- [ ] Send NRPN Parameter Null message
 
-[ ] Send RPN Value and Parameter Change message
-[ ] Send RPN Value Change message
-[ ] Send RPN Parameter Null message
+- [ ] Send RPN Value and Parameter Change message
+- [ ] Send RPN Value Change message
+- [ ] Send RPN Parameter Null message
 
-[ ] Parse / aggregate NRPN messages on receive
-[ ] Parse / aggregate RPN messages on receive
+- [ ] Parse / aggregate NRPN messages on receive
+- [ ] Parse / aggregate RPN messages on receive
 
 # Samples
 
