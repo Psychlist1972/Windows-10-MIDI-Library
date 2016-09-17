@@ -109,7 +109,7 @@ Example code for sending an NRPN message:
 ### Status
 - [x] Send NRPN Value and Parameter Change message
 - [ ] Send NRPN Value Change message
-- [ ] Send NRPN Parameter Null message
+- [x] Send NRPN Parameter Null message
 
 - [ ] Send RPN Value and Parameter Change message
 - [ ] Send RPN Value Change message
