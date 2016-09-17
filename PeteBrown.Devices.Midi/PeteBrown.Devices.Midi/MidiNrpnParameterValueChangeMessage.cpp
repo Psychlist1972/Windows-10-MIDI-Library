@@ -12,8 +12,8 @@ MidiNrpnParameterValueChangeMessage::MidiNrpnParameterValueChangeMessage()
 
 	_rawBytes = MidiMessageHelper::GetRawDataBytesFromBuffer(_rawData);
 
-//	_type = Windows::Devices::Midi::MidiMessageType::None;
-	_type = Windows::Devices::Midi::MidiMessageType::ControlChange;
+	_type = Windows::Devices::Midi::MidiMessageType::None;
+//	_type = Windows::Devices::Midi::MidiMessageType::ControlChange;
 
 
 	BuildBaseMessages();
