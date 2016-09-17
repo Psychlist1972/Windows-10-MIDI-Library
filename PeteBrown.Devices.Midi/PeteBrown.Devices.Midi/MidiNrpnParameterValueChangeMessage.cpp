@@ -17,28 +17,3 @@ MidiNrpnParameterValueChangeMessage::MidiNrpnParameterValueChangeMessage()
 	BuildBaseMessages();
 }
 
-
-//
-//unsigned short MidiNrpnParameterValueChangeMessage::ParameterNumber::get()
-//{
-//
-//}
-//
-//void MidiNrpnParameterValueChangeMessage::ParameterNumber::set(unsigned short value)
-//{
-//	// TODO: Set msb and lsb as well as backing store
-//}
-//
-//
-//
-//unsigned short MidiNrpnParameterValueChangeMessage::Value::get()
-//{
-//
-//}
-//
-//void MidiNrpnParameterValueChangeMessage::Value::set(unsigned short value)
-//{
-//	// TODO: Set msb and lsb as well as backing store
-//}
-
-
