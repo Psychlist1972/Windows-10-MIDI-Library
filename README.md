@@ -12,9 +12,10 @@ https://www.nuget.org/packages/PeteBrown.Devices.Midi/
 - Beat Clock generator for stand-alone beat clock usage (not for sequencers or similar apps)
 - Device enumeration and watcher
 - Bindable collection of Input and Output ports
-- 
+- NRPN message formatting
+
 ## Experimental or incomplete features
-- RPN and NRPN message formatting
+- RPN message formatting
 - MidiInPortEx for help with processing incoming logical (RPN, NRPN etc.) messages- 
 
 ## Investigating
