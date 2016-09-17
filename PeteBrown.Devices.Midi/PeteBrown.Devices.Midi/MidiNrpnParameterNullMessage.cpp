@@ -7,6 +7,13 @@ using namespace PeteBrown::Devices::Midi;
 
 MidiNrpnParameterNullMessage::MidiNrpnParameterNullMessage()
 {
-//	_type = Windows::Devices::Midi::MidiMessageType::None;
+	_rawData = ref new Windows::Storage::Streams::Buffer(TOTAL_BYTES_IN_MESSAGE);
+	_rawData->Length = TOTAL_BYTES_IN_MESSAGE;
+
+	_rawBytes = MidiMessageHelper::GetRawDataBytesFromBuffer(_rawData);
+
+	_type = Windows::Devices::Midi::MidiMessageType::None;
+
+	BuildBaseMessages();
 
 }

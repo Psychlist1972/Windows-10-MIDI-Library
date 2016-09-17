@@ -150,6 +150,19 @@ namespace TestMidiApp.ViewModel
             }
         }
 
+        public void SendNrpnParameterNull(byte channel)
+        {
+            var message = new MidiNrpnParameterNullMessage();
+
+            message.Channel = channel;
+
+            // just using the clock OutputPorts because it's convenient. 
+            foreach (MidiOutPort port in _clock.OutputPorts)
+            {
+                System.Diagnostics.Debug.WriteLine("Sending NRPN null: Channel: {0}, interface {1}", message.Channel, port.DeviceId);
+                port.SendMessage(message);
+            }
+        }
 
 
 

@@ -65,10 +65,21 @@ namespace TestMidiApp
         //    UpdateTempo();
         //}
 
+
         private void TestNrpn_Click(object sender, RoutedEventArgs e)
         {
-            _vm.SendNrpn(byte.Parse(Channel.Text), UInt16.Parse(ParameterNumber.Text), UInt16.Parse(ParameterValue.Text));
+            var channel = byte.Parse(Channel.Text);
+
+            // send the NRPN full (parameter + value) message
+            _vm.SendNrpn(channel, UInt16.Parse(ParameterNumber.Text), UInt16.Parse(ParameterValue.Text));
+
+            // a best practice is to null out the parameter when you've finished. This prevents unexpected value changes later
+            _vm.SendNrpnParameterNull(channel);
         }
+
+
+
+
 
         private void TestRpn_Click(object sender, RoutedEventArgs e)
         {
