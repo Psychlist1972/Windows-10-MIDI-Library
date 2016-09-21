@@ -98,6 +98,7 @@ Example code for sending an NRPN message:
     // parameter number and value are 14 bit values
     // and will be split into LSB and MSB across
     // two separate MIDI messages
+    
     message.ParameterNumber = parameterNumber;
     message.ParameterValue = parameterValue;
     message.Channel = channel;
@@ -105,6 +106,27 @@ Example code for sending an NRPN message:
     // send the message through a MidiOutPort just like 
     // any built-in MIDI message
     outputPort.SendMessage(message);
+    
+    // with NRPN, if you send just a value update, it will
+    // use the last parameter number you sent it.
+    // You could send the parameter number every time,
+    // but then you're sending 2x as many messages as 
+    // necessary, over a low-speed transport
+    
+    var valueChangeMessage = new MidiNrpnValueChangeMessage();
+    valueChangeMessage.ParameterValue = 5192;
+    valueChangeMessage.Channel = channel;
+    
+    outputPort.SendMessage(valueChangeMessage);
+    
+    // because the parameter number is sticky, it's good
+    // to null it out when you're done messing with a
+    // particular controller/parameter
+    
+    var parameterNullMessage = new MidiNrpnParameterNullMessage();
+    parameterNullMessage.Channel = channel;
+    
+    outputPort.SendMessage(parameterNullMessage);
 ```
 
 ### Status
