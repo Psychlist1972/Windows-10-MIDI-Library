@@ -1,7 +1,7 @@
 # Windows-10-MIDI-Library
 Library for C# and other apps to use Windows 10 Anniversary Edition native MIDI (USB, bluetooth, etc.)
 
-Want to use a read-to-go version? The NuGet package is kept up to date with milestones here. Right now, it has the basics, the clock and NRPN formatting. Updated on 9/21/2016.
+Want to use a read-to-go version? The NuGet package is kept up to date with milestones here. Right now, it has the basics, the clock and NRPN formatting. Updated on 10/19/2016 to fix a DLL folder issue that was causing a type load failure.
 https://www.nuget.org/packages/PeteBrown.Devices.Midi/
 
 # Requirements
