@@ -43,13 +43,13 @@ namespace TestMidiApp.ViewModel
 
         private void InputPortDescriptors_VectorChanged(Windows.Foundation.Collections.IObservableVector<MidiDeviceInformation> sender, Windows.Foundation.Collections.IVectorChangedEventArgs @event)
         {
-            System.Diagnostics.Debug.WriteLine("InputPortDescriptors - VectorChanged ");
+            //System.Diagnostics.Debug.WriteLine("InputPortDescriptors - VectorChanged ");
             System.Diagnostics.Debug.WriteLine(@event.CollectionChange);
         }
 
         private void OutputPortDescriptors_VectorChanged(Windows.Foundation.Collections.IObservableVector<MidiDeviceInformation> sender, Windows.Foundation.Collections.IVectorChangedEventArgs @event)
         {
-            System.Diagnostics.Debug.WriteLine("OutputPortDescriptors - VectorChanged");
+            //System.Diagnostics.Debug.WriteLine("OutputPortDescriptors - VectorChanged");
             System.Diagnostics.Debug.WriteLine(@event.CollectionChange);
         }
 
@@ -91,23 +91,26 @@ namespace TestMidiApp.ViewModel
             foreach (var info in sender.OutputPortDescriptors)
             {
                 // This diagnostic info is how you can see the IDs of all the ports.
-                System.Diagnostics.Debug.WriteLine("- Output -----");
-                System.Diagnostics.Debug.WriteLine(info.Name);
-                System.Diagnostics.Debug.WriteLine(info.Id);
-                System.Diagnostics.Debug.WriteLine("--------------");
+                //System.Diagnostics.Debug.WriteLine("- Output -----");
+                //System.Diagnostics.Debug.WriteLine(info.Name);
+                //System.Diagnostics.Debug.WriteLine(info.Id);
+                //System.Diagnostics.Debug.WriteLine("--------------");
 
                 var port = (MidiOutPort)await MidiOutPort.FromIdAsync(info.Id);
+
+                DebugDisplayDeviceInformationProperties(info.DeviceInformation);
+
 
                 // If you don't want the clock on all ports, here's where you'd change the code
                 if (port != null)
                     _clock.OutputPorts.Add(port);
                 else
-                    System.Diagnostics.Debug.WriteLine("Failed to create port with id " + info.Id);
+                    System.Diagnostics.Debug.WriteLine("Failed to create clock output port with Name:{0} and Id {1}", info.Name, info.Id);
             }
 
             if (_clock.OutputPorts.Count > 0)
             {
-                System.Diagnostics.Debug.WriteLine("About to create clock.");
+                //System.Diagnostics.Debug.WriteLine("About to create clock.");
 
                 _clock.SendMidiStartMessage = true;
                 _clock.SendMidiStopMessage = true;
@@ -119,14 +122,41 @@ namespace TestMidiApp.ViewModel
         }
 
 
+        private void DebugDisplayDeviceInformationProperties(DeviceInformation info)
+        {
+            foreach (var key in info.Properties.Keys)
+            {
+                var val = info.Properties[key];
+
+                System.Diagnostics.Debug.Write("- (property) " + key + ": ");
+
+                if (val != null)
+                {
+                    System.Diagnostics.Debug.WriteLine(info.Properties[key].ToString());
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("(null)");
+                }
+            }
+
+
+        }
+
+
         // All input ports have been enumerated
         private void _watcher_InputPortsEnumerated(MidiDeviceWatcher sender)
         {
             foreach (var info in sender.InputPortDescriptors)
             {
                 System.Diagnostics.Debug.WriteLine("- Input -----");
-                System.Diagnostics.Debug.WriteLine(info.Name);
-                System.Diagnostics.Debug.WriteLine(info.Id);
+                System.Diagnostics.Debug.WriteLine("- Name: " + info.Name);
+                System.Diagnostics.Debug.WriteLine("- Id: " + info.Id);
+                System.Diagnostics.Debug.WriteLine("- Kind: " + info.DeviceInformation.Kind);
+                System.Diagnostics.Debug.WriteLine("- InterfaceType: " + info.InterfaceType);
+
+                DebugDisplayDeviceInformationProperties(info.DeviceInformation);
+
                 System.Diagnostics.Debug.WriteLine("--------------");
             }
         }

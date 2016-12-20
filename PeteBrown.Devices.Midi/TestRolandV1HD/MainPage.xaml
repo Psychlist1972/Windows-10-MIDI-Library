@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:enumeration="using:Windows.Devices.Enumeration"    
+    xmlns:midi="using:PeteBrown.Devices.Midi"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -37,7 +38,7 @@
                 <ListBox x:Name="MidiOutputList" Margin="20, 60, 20, 20" ItemsSource="{x:Bind OutputPortDescriptors, Mode=OneWay}"
                          SelectionChanged="MidiOutputList_SelectionChanged">
                     <ListBox.ItemTemplate>
-                        <DataTemplate x:DataType="enumeration:DeviceInformation">
+                        <DataTemplate x:DataType="midi:MidiDeviceInformation">
                             <StackPanel Orientation="Vertical" Margin="5">
                                 <TextBlock Text="{x:Bind Name}" FontSize="20"/>
                                 <TextBox Text="{x:Bind Id, Mode=OneTime}" FontSize="11" BorderBrush="Transparent" Background="Transparent" IsReadOnly="True" />

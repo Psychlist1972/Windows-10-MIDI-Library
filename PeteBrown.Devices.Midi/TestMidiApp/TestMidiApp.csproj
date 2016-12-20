@@ -108,6 +108,8 @@
     <None Include="TestMidiApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Icons\MIDI-BLE.png" />
+    <Content Include="Assets\Icons\MIDI-DIN.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
