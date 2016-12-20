@@ -16,9 +16,9 @@ ObservableDeviceInformationCollection::ObservableDeviceInformationCollection(boo
 {
 	_dispatchNotificationEvent = dispatchNotificationEvent;
 
-	_backingCollection = ref new Platform::Collections::Vector<DeviceInformation ^>();
+	_backingCollection = ref new Platform::Collections::Vector<CollectionItemType ^>();
 
-	_backingCollection->VectorChanged += ref new VectorChangedEventHandler<DeviceInformation ^>(this, &ObservableDeviceInformationCollection::OnVectorChanged);
+	_backingCollection->VectorChanged += ref new VectorChangedEventHandler<CollectionItemType ^>(this, &ObservableDeviceInformationCollection::OnVectorChanged);
 
 
 	if (_dispatchNotificationEvent)

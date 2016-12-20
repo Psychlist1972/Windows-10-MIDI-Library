@@ -66,7 +66,9 @@ void MidiDeviceWatcher::EnumerateOutputPorts()
 
 void MidiDeviceWatcher::OnInputDeviceAdded(DeviceWatcher^ sender, DeviceInformation^ args)
 {
-    _inputPortDescriptors->Append(args);
+	MidiDeviceInformation^ info = ref new MidiDeviceInformation(args);
+
+    _inputPortDescriptors->Append(info);
 }
 
 void MidiDeviceWatcher::OnInputDeviceRemoved(DeviceWatcher^ sender, DeviceInformationUpdate^ args)
@@ -109,8 +111,10 @@ void MidiDeviceWatcher::OnOutputDeviceAdded(DeviceWatcher^ sender, DeviceInforma
         }
     }
 
-    // add to collection
-    _outputPortDescriptors->Append(args);
+	// add to collection
+
+	MidiDeviceInformation^ info = ref new MidiDeviceInformation(args);
+    _outputPortDescriptors->Append(info);
 }
 
 void MidiDeviceWatcher::OnOutputDeviceRemoved(DeviceWatcher^ sender, DeviceInformationUpdate^ args)

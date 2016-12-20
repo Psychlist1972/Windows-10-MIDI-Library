@@ -211,6 +211,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="IObservableDeviceInformationCollection.h" />
+    <ClInclude Include="MidiDeviceInformation.h" />
     <ClInclude Include="MidiDeviceWatcher.h" />
     <ClInclude Include="MidiInPortEx.h" />
     <ClInclude Include="MidiMessageHelper.h" />
@@ -224,6 +225,7 @@
     <ClInclude Include="MidiClockGenerator.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="MidiDeviceInformation.cpp" />
     <ClCompile Include="MidiDeviceWatcher.cpp" />
     <ClCompile Include="MidiInPortEx.cpp" />
     <ClCompile Include="MidiMessageHelper.cpp" />

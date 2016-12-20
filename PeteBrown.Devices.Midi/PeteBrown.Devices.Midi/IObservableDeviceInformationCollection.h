@@ -1,6 +1,7 @@
 #pragma once
 
 #include <collection.h>
+#include "MidiDeviceInformation.h"
 
 namespace WFC = ::Windows::Foundation::Collections;
 namespace WUXI = ::Windows::UI::Xaml::Interop;
@@ -13,7 +14,8 @@ namespace PeteBrown
 	{
 		namespace Midi
 		{
-			typedef ::Windows::Devices::Enumeration::DeviceInformation CollectionItemType;
+			//typedef ::Windows::Devices::Enumeration::DeviceInformation CollectionItemType;
+			typedef MidiDeviceInformation CollectionItemType;
 
 			[Windows::Foundation::Metadata::WebHostHidden]
 			public interface class IObservableDeviceInformationCollection

@@ -41,13 +41,13 @@ namespace TestMidiApp.ViewModel
         }
 
 
-        private void InputPortDescriptors_VectorChanged(Windows.Foundation.Collections.IObservableVector<DeviceInformation> sender, Windows.Foundation.Collections.IVectorChangedEventArgs @event)
+        private void InputPortDescriptors_VectorChanged(Windows.Foundation.Collections.IObservableVector<MidiDeviceInformation> sender, Windows.Foundation.Collections.IVectorChangedEventArgs @event)
         {
             System.Diagnostics.Debug.WriteLine("InputPortDescriptors - VectorChanged ");
             System.Diagnostics.Debug.WriteLine(@event.CollectionChange);
         }
 
-        private void OutputPortDescriptors_VectorChanged(Windows.Foundation.Collections.IObservableVector<DeviceInformation> sender, Windows.Foundation.Collections.IVectorChangedEventArgs @event)
+        private void OutputPortDescriptors_VectorChanged(Windows.Foundation.Collections.IObservableVector<MidiDeviceInformation> sender, Windows.Foundation.Collections.IVectorChangedEventArgs @event)
         {
             System.Diagnostics.Debug.WriteLine("OutputPortDescriptors - VectorChanged");
             System.Diagnostics.Debug.WriteLine(@event.CollectionChange);
@@ -88,7 +88,7 @@ namespace TestMidiApp.ViewModel
         // All output ports have been enumerated
         private async void _watcher_OutputPortsEnumerated(MidiDeviceWatcher sender)
         {
-            foreach (DeviceInformation info in sender.OutputPortDescriptors)
+            foreach (var info in sender.OutputPortDescriptors)
             {
                 // This diagnostic info is how you can see the IDs of all the ports.
                 System.Diagnostics.Debug.WriteLine("- Output -----");
@@ -122,7 +122,7 @@ namespace TestMidiApp.ViewModel
         // All input ports have been enumerated
         private void _watcher_InputPortsEnumerated(MidiDeviceWatcher sender)
         {
-            foreach (DeviceInformation info in sender.InputPortDescriptors)
+            foreach (var info in sender.InputPortDescriptors)
             {
                 System.Diagnostics.Debug.WriteLine("- Input -----");
                 System.Diagnostics.Debug.WriteLine(info.Name);
