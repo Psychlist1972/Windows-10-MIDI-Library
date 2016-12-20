@@ -11,8 +11,10 @@ https://www.nuget.org/packages/PeteBrown.Devices.Midi/
 ## Working and usable features
 - Beat Clock generator for stand-alone beat clock usage (not for sequencers or similar apps)
 - Device enumeration and watcher
-- Bindable collection of Input and Output ports
+- Identification of Bluetooth MIDI interfaces vs Other (USB, Network, etc.) interfaces. Requires using MidiDeviceInformation rather than stock DeviceInformation class.
+- Bindable collection of Input and Output port descriptions
 - NRPN message formatting / sending
+
 
 ## Experimental or incomplete features
 - RPN message formatting / sending
