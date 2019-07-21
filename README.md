@@ -194,3 +194,7 @@ Binding in C# is enabled through the Windows::UI::Xaml::Interop::IBindableObserv
 	};
 ```
 There are likely ways to simplify the class or otherwise improve it. Happy to take pull requests. :)
+
+# MIDI Port Names
+Don't like the Windows 10 / WinRT MIDI Port names? Check out this (unofficial, unsupported) PowerShell script that lets you rename them to anything you want:
+https://gist.github.com/Psychlist1972/ec5c52c9e4999710191d4bb07e82f98a
